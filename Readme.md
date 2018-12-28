@@ -1,2 +1,2 @@
 ## Erica Dominic
-### https://EricaHD.github.io
+### Personal website: https://EricaHD.github.io
