@@ -2,7 +2,7 @@
 
 const e = React.createElement;
 
-class LikeButton extends React.Component {
+class Title extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,5 +17,4 @@ class LikeButton extends React.Component {
 }
 
 const domContainer = document.querySelector('#title_container');
-const root = ReactDOM.createRoot(domContainer);
-root.render(e(LikeButton));
+ReactDOM.render(e(Title), domContainer);
