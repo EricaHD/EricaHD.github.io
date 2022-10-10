@@ -4,7 +4,6 @@
   "description": "Personal website",
   "author": "Erica Dominic",
   "license": "ISC",
-  "main": "index.html",
   "scripts": {
     "serve": "webpack-dev-server --mode development",
     "build": "webpack --mode development",
