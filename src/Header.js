@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import background from "../images/banner.jpg";
 
 class Header extends Component {
   render() {
@@ -28,7 +29,13 @@ class Header extends Component {
         <a href="#one" class="more scrolly"></a>
       </section>
     `;
-    return (<div dangerouslySetInnerHTML={{__html: body}} />);
+    const myStyle={
+      backgroundImage: `url(${background})`,
+      height: '100vh',
+      width: '100vh',
+      backgroundRepeat: 'no-repeat',
+    };
+    return (<div dangerouslySetInnerHTML={{__html: body}} style={myStyle} />);
   }
 }
 
