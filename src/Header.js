@@ -6,7 +6,7 @@ class Header extends Component {
     const body = `
       <section id="banner">
         <div class="inner">
-          <div id="title_container"></div>
+          <h2>Erica Dominic</h2>
           <p>Software Engineer<br/>New York, NY</p>
           <ul class="icons">
             <li>
