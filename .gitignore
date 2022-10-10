@@ -7,8 +7,5 @@
 # Node
 node_modules
 
-# Webpack bundler output
-dist/
-
 # Notes
 Notes.txt
