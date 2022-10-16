@@ -23,8 +23,19 @@ module.exports = {
             loader: 'file-loader',
           },
         ],
-      }
-    ]
+      },
+      {
+        test: /\.(svg|ttf|woff|woff2|eot)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
+          },
+        ],
+      },
+    ],
   },
   resolve: { extensions: ["*", ".js", ".jsx"] },
   output: {
