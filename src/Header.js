@@ -7,7 +7,7 @@ class Header extends Component {
     return (
       <div>
         <Button variant="contained">Hello world</Button>
-        <p>Sorry you cannot view my personal website at this time!</p>
+        <p>Sorry, you cannot view my personal website at this time!</p>
         <p>I am borrowing this page temporarily for a hackathon project.</p>
         <BarChart
           xAxis={[{ scaleType: 'band', data: ['group A', 'group B', 'group C'] }]}

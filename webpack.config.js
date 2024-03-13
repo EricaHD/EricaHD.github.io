@@ -1,53 +1,55 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path')
 
 module.exports = {
-  entry: "./src/index.js",
-  mode: "development",
+  // Set the mode to development or production
+  mode: 'development',
+
+  // Where webpack looks to start building the bundle
+  entry: {
+    main: path.resolve(__dirname, './src/index.js'),
+  },
+
+  // Where webpack outputs the assets and bundles
+  output: {
+    path: path.resolve(__dirname, 'dist/'),
+    filename: 'bundle.js',
+  },
+
+  // Determine how modules within the project are treated
   module: {
     rules: [
+      // JavaScript
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
         options: { presets: ["@babel/env"] }
       },
+      // CSS
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
       },
+      // Images
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-          },
-        ],
+        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+        type: 'asset/resource',
       },
+      // Fonts and SVGs
       {
-        test: /\.(svg|ttf|woff|woff2|eot)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-            },
-          },
-        ],
+        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        type: 'asset/inline',
       },
     ],
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "dist/"),
-    publicPath: "/dist/",
-    filename: "bundle.js"
-  },
+
+  // Spin up a server for quick development
   devServer: {
-    contentBase: path.join(__dirname, "templates/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/dist/",
-    hotOnly: true
-  },
-  plugins: []
+    historyApiFallback: true,
+    static: path.resolve(__dirname, './dist'),
+    open: true,
+    compress: true,
+    hot: true,
+    port: 8080,
+  }
 };
