@@ -16,7 +16,7 @@ const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 31200;
 const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 
-export default function Header() {
+export default function Chart() {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // STATE                                                                                                            //
