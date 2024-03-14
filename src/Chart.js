@@ -13,7 +13,7 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import { roundToNearestCent, currencyFormatter } from './utils.js';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
-const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 31200;
+const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
 const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 
 export default function Chart() {
