@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Header from "./Header";
+import React, { Component } from 'react';
+import Chart from './Chart';
 import Typography from '@mui/material/Typography';
 
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
         <Typography variant="h6" component="div" sx={{ textAlign: 'center' }}>
           with a 2% per-paycheck match from your company
         </Typography>
-        <Header />
+        <Chart />
       </div>
     );
   }
