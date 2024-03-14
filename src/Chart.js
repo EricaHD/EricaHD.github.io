@@ -168,9 +168,10 @@ export default function Chart() {
           }
           label="Check this box if you will be 50 or older by the end of the calendar year"
           labelPlacement="end"
+          sx={{ margin: 'auto' }}
         />
       </Stack>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '80%', margin: 'auto' }}>
         <ResponsiveChartContainer
           series={series}
           xAxis={[
