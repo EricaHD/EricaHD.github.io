@@ -37,60 +37,60 @@ export default function Chart() {
 
   // TODO make this user input
   const income = [
-    160000, // Jan #1
-    160000, // Jan #2
-    160000, // Feb #1
-    160000, // Feb #2
+    161500, // Jan #1
+    161500, // Jan #2
+    161500, // Feb #1
+    161500, // Feb #2
     15865,  // STI
-    164355, // Mar #1
-    164355, // Mar #2
-    164355, // Apr #1
-    164355, // Apr #2
-    164355, // May #1
-    164355, // May #2
-    164355, // Jun #1
-    164355, // Jun #2
-    164355, // Jul #1
-    164355, // Jul #2
-    164355, // Aug #1
-    164355, // Aug #2
-    164355, // Sept #1
-    164355, // Sept #2
-    164355, // Oct #1
-    164355, // Oct #2
-    164355, // Nov #1
-    164355, // Nov #2
-    164355, // Dec #1
-    164355, // Dec #2
+    165895, // Mar #1
+    165895, // Mar #2
+    165895, // Apr #1
+    165895, // Apr #2
+    165895, // May #1
+    165895, // May #2
+    165895, // Jun #1
+    165895, // Jun #2
+    165895, // Jul #1
+    165895, // Jul #2
+    165895, // Aug #1
+    165895, // Aug #2
+    165895, // Sept #1
+    165895, // Sept #2
+    165895, // Oct #1
+    165895, // Oct #2
+    165895, // Nov #1
+    165895, // Nov #2
+    165895, // Dec #1
+    165895, // Dec #2
   ];
 
   // TODO make this user input
   const individualContributionPercentages = [
-    0.12, // Jan #1
-    0.12, // Jan #2
-    0.12, // Feb #1
-    0.12, // Feb #2
-    0.12, // STI
-    0.12, // Mar #1
-    0.12, // Mar #2
-    0.12, // Apr #1
-    0.12, // Apr #2
-    0.12, // May #1
-    0.12, // May #2
-    0.12, // Jun #1
-    0.12, // Jun #2
-    0.12, // Jul #1
-    0.12, // Jul #2
-    0.12, // Aug #1
-    0.12, // Aug #2
-    0.12, // Sept #1
-    0.12, // Sept #2
-    0.12, // Oct #1
-    0.12, // Oct #2
-    0.12, // Nov #1
-    0.12, // Nov #2
-    0.12, // Dec #1
-    0.12, // Dec #2
+    0.13, // Jan #1
+    0.13, // Jan #2
+    0.13, // Feb #1
+    0.13, // Feb #2
+    0.13, // STI
+    0.13, // Mar #1
+    0.13, // Mar #2
+    0.13, // Apr #1
+    0.13, // Apr #2
+    0.13, // May #1
+    0.13, // May #2
+    0.13, // Jun #1
+    0.13, // Jun #2
+    0.13, // Jul #1
+    0.13, // Jul #2
+    0.13, // Aug #1
+    0.13, // Aug #2
+    0.13, // Sept #1
+    0.13, // Sept #2
+    0.13, // Oct #1
+    0.13, // Oct #2
+    0.13, // Nov #1
+    0.13, // Nov #2
+    0.13, // Dec #1
+    0.13, // Dec #2
   ];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,13 +134,19 @@ export default function Chart() {
     '#dbcdf0', // purple
   ];
 
+  let cumulativeIndividualContribution = 0;
   const series = [];
   for (let i = 0; i < paychecks.length; i++) {
-    const incomeThisPayPeriod = paychecks[i] === 'STI' ? income[i] : income[i] / 24;
-    const contributionThisPayperiod = roundToNearestCent(incomeThisPayPeriod * individualContributionPercentages[i]);
+    const incomeThisPaycheck = paychecks[i] === 'STI' ? income[i] : income[i] / 24;
+    let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * individualContributionPercentages[i]);
+    if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
+      const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
+      contributionThisPaycheck -= overage;
+    }
+    cumulativeIndividualContribution += contributionThisPaycheck;
     series.push({
       label: paychecks[i],
-      data: (Array(i).fill(0)).concat(Array(paychecks.length - i).fill(contributionThisPayperiod)),
+      data: (Array(i).fill(0)).concat(Array(paychecks.length - i).fill(contributionThisPaycheck)),
       type: 'bar',
       stack: 'IndividualContributionStack',
       valueFormatter: currencyFormatter,
