@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Typography from '@mui/material/Typography';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import { axisClasses, ChartsReferenceLine } from '@mui/x-charts';
 import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
@@ -10,7 +11,9 @@ import { BarChart, BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 import { useDrawingArea } from '@mui/x-charts/hooks';
-import { roundToNearestCent, currencyFormatter } from './utils.js';
+import BaseSalary from './BaseSalaryInput';
+import ContributionPercentageInput from './ContributionPercentageInput';
+import { roundToNearestCent, currencyFormatter } from './utils';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
@@ -170,6 +173,16 @@ export default function Chart() {
           labelPlacement="end"
           sx={{ margin: 'auto' }}
         />
+      </Stack>
+      <Stack direction="row" sx={{ margin: 'auto', borderBottom: '1px solid lightgray' }}>
+        <Typography
+          variant="h5"
+          sx={{ color: '#3f434a', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginRight: '15px' }}
+        >
+          {paychecks[0]}
+        </Typography>
+        <BaseSalary />
+        <ContributionPercentageInput />
       </Stack>
       <Box sx={{ width: '80%', margin: 'auto' }}>
         <ResponsiveChartContainer
