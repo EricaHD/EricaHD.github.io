@@ -14,6 +14,7 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import BaseSalary from './BaseSalaryInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import { roundToNearestCent, currencyFormatter } from './utils';
+import styles from './Chart.styles';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
@@ -162,7 +163,7 @@ export default function Chart() {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <Stack sx={{ width: '100%' }}>
+    <Stack sx={styles.fullWidth}>
       <Stack direction="row">
         <FormControlLabel
           checked={fiftyOrOlder}
@@ -171,20 +172,20 @@ export default function Chart() {
           }
           label="Check this box if you will be 50 or older by the end of the calendar year"
           labelPlacement="end"
-          sx={{ margin: 'auto' }}
+          sx={styles.centered}
         />
       </Stack>
-      <Stack direction="row" sx={{ margin: 'auto', borderBottom: '1px solid lightgray' }}>
+      <Stack direction="row" sx={styles.paycheckSection}>
         <Typography
           variant="h5"
-          sx={{ color: '#3f434a', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginRight: '15px' }}
+          sx={styles.paycheckSectionTitle}
         >
           {paychecks[0]}
         </Typography>
         <BaseSalary />
         <ContributionPercentageInput />
       </Stack>
-      <Box sx={{ width: '80%', margin: 'auto' }}>
+      <Box sx={styles.chartBox}>
         <ResponsiveChartContainer
           series={series}
           xAxis={[
