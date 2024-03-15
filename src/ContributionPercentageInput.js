@@ -1,6 +1,8 @@
 import React from 'react';
 import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_NumberInput';
 import { styled } from '@mui/system';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { blue, grey } from './utils/colors';
@@ -33,13 +35,15 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
 export default function ContributionPercentageInput() {
   const [value, setValue] = React.useState(null);
   return (
-    <NumberInput
-      endAdornment={<InputAdornment>%</InputAdornment>}
-      onChange={(event, val) => setValue(val)}
-      min={0}
-      max={100}
-      sx={styles.numberInput}
-    />
+    <Stack direction="column" sx={styles.contributionPercentageInputStack}>
+      <Typography variant="caption">Retirement contribution</Typography>
+      <NumberInput
+        endAdornment={<InputAdornment>%</InputAdornment>}
+        onChange={(event, val) => setValue(val)}
+        min={0}
+        max={100}
+      />
+    </Stack>
   );
 }
 

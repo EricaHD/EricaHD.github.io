@@ -1,5 +1,5 @@
 export default {
-  numberInput: {
-    margin: 3,
+  contributionPercentageInputStack: {
+    margin: 2,
   },
 };
