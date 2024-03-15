@@ -13,7 +13,8 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import AgeCheckbox from './AgeCheckbox';
 import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
-import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations.js';
+import IndividualContributionInfo from './IndividualContributionInfo';
+import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Chart';
 
@@ -75,18 +76,19 @@ export default function Chart() {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [series, setSeries] = React.useState([]);
+  const [cumulativeIndividualContribution, setCumulativeIndividualContribution] = React.useState(0);
 
   React.useEffect(() => {
-    let cumulativeIndividualContribution = 0;
+    let newCumulativeIndividualContribution = 0;
     const newSeries = [];
     for (let i = 0; i < NUM_PAYCHECKS; i++) {
       const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? income[i] : income[i] / 24.0;
       let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
-      if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
-        const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
+      if (newCumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
+        const overage = newCumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
         contributionThisPaycheck -= overage;
       }
-      cumulativeIndividualContribution += contributionThisPaycheck;
+      newCumulativeIndividualContribution += contributionThisPaycheck;
       newSeries.push({
         label: PAYCHECKS[i],
         data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(contributionThisPaycheck)),
@@ -97,6 +99,7 @@ export default function Chart() {
       });
     }
     setSeries(newSeries);
+    setCumulativeIndividualContribution(newCumulativeIndividualContribution);
   }, [maxIndividualContribution, income, contributionPercentage]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,6 +130,10 @@ export default function Chart() {
         </Grid>
 
         <Grid item xs={8}>
+          <IndividualContributionInfo
+            cumulativeIndividualContribution={cumulativeIndividualContribution}
+            maxIndividualContribution={maxIndividualContribution}
+          />
           <ResponsiveChartContainer
             series={series}
             xAxis={[
