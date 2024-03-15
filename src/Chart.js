@@ -13,7 +13,7 @@ import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 import { useDrawingArea } from '@mui/x-charts/hooks';
 import BaseSalary from './BaseSalaryInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
-import { roundToNearestCent, currencyFormatter } from './utils';
+import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations.js';
 import { pastelColors } from './utils/colors';
 import styles from './Chart.styles';
 
