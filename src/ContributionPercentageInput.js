@@ -32,16 +32,16 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function ContributionPercentageInput() {
-  const [value, setValue] = React.useState(null);
+export default function ContributionPercentageInput({ onChange }) {
   return (
     <Stack direction="column" sx={styles.contributionPercentageInputStack}>
       <Typography variant="caption">Retirement contribution</Typography>
       <NumberInput
         endAdornment={<InputAdornment>%</InputAdornment>}
-        onChange={(event, val) => setValue(val)}
+        onChange={(event, val) => onChange(val)}
         min={0}
         max={100}
+        defaultValue={0}
       />
     </Stack>
   );

@@ -29,15 +29,15 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function BaseSalaryInput() {
-  const [value, setValue] = React.useState(null);
+export default function BaseSalaryInput({ onChange }) {
   return (
     <Stack direction="column" sx={styles.baseSalaryInputStack}>
       <Typography variant="caption">Base salary</Typography>
       <NumberInput
         startAdornment={<InputAdornment sx={styles.inputAdornment}>$</InputAdornment>}
-        onChange={(event, val) => setValue(val)}
+        onChange={(event, val) => onChange(val)}
         min={0}
+        defaultValue={0}
       />
     </Stack>
   );

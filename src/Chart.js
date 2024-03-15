@@ -36,6 +36,20 @@ export default function Chart() {
     setMaxIndividualContribution(maxContribution);
   }
 
+  const [baseSalary, setBaseSalary] = React.useState(0);
+
+  const onChangeBaseSalary = (value) => {
+    const newValue = (value === null) ? 0 : value;
+    setBaseSalary(newValue);
+  }
+
+  const [contributionPercentage, setContributionPercentage] = React.useState(0);
+
+  const onChangeContributionPercentage = (value) => {
+    const newValue = (vaule === null) ? 0 : value;
+    setContributionPercentage(newValue);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // USER INPUT                                                                                                       //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,8 +185,8 @@ export default function Chart() {
 
       <Stack direction="row" sx={styles.paycheckSection}>
         <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paychecks[0]}</Typography>
-        <BaseSalaryInput />
-        <ContributionPercentageInput />
+        <BaseSalaryInput onChange={onChangeBaseSalary} />
+        <ContributionPercentageInput onChange={setContributionPercentage} />
       </Stack>
 
       <Box sx={styles.chartBox}>
