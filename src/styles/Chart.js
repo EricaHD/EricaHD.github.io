@@ -20,4 +20,7 @@ export default {
     width: '80%',
     margin: 'auto',
   },
+  baseSalaryInputStack: {
+    margin: 2,
+  },
 };

@@ -11,7 +11,7 @@ import { BarChart, BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 import { useDrawingArea } from '@mui/x-charts/hooks';
-import BaseSalary from './BaseSalaryInput';
+import BaseSalaryInput from './BaseSalaryInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations.js';
 import { pastelColors } from './utils/colors';
@@ -156,6 +156,7 @@ export default function Chart() {
 
   return (
     <Stack sx={styles.fullWidth}>
+
       <Stack direction="row">
         <FormControlLabel
           checked={fiftyOrOlder}
@@ -167,16 +168,13 @@ export default function Chart() {
           sx={styles.centered}
         />
       </Stack>
+
       <Stack direction="row" sx={styles.paycheckSection}>
-        <Typography
-          variant="h5"
-          sx={styles.paycheckSectionTitle}
-        >
-          {paychecks[0]}
-        </Typography>
-        <BaseSalary />
+        <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paychecks[0]}</Typography>
+        <BaseSalaryInput />
         <ContributionPercentageInput />
       </Stack>
+
       <Box sx={styles.chartBox}>
         <ResponsiveChartContainer
           series={series}
@@ -201,6 +199,7 @@ export default function Chart() {
           />
         </ResponsiveChartContainer>
       </Box>
+
     </Stack>
   );
 }
