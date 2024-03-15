@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import { axisClasses, ChartsReferenceLine } from '@mui/x-charts';
@@ -127,11 +128,17 @@ export default function Chart() {
       </Stack>
 
       {paychecks.map((paycheck, idx) => (
-        <Stack key={paycheck} direction="row" sx={styles.paycheckSection}>
-          <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
-          <IncomeInput value={income[idx]} onChange={(val) => onChangeIncome(idx, val)} />
-          <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(val) => onChangeContributionPercentage(idx, val)} />
-        </Stack>
+        <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
+          <Grid item xs={3}>
+            <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
+          </Grid>
+          <Grid item xs={5}>
+            <IncomeInput value={income[idx]} onChange={(val) => onChangeIncome(idx, val)} />
+          </Grid>
+          <Grid item xs={4}>
+            <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(val) => onChangeContributionPercentage(idx, val)} />
+          </Grid>
+        </Grid>
       ))};
 
       <Box sx={styles.chartBox}>

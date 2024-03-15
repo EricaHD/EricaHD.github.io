@@ -10,13 +10,10 @@ export default {
     padding: '0 15px',
     background: '#f7f7f7',
     borderRadius: 4,
+    width: '550px',
   },
   paycheckSectionTitle: {
     color: '#3f434a',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginRight: '15px',
   },
   chartBox: {
     width: '80%',

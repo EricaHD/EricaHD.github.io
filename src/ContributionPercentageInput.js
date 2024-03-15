@@ -49,7 +49,7 @@ export default function ContributionPercentageInput({ value, onChange }) {
 
 const InputAdornment = styled('div')(
   ({ theme }) => `
-  margin: 8px 20px 8px -35px;
+  margin: 8px 10px 8px -25px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
