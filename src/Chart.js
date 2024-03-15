@@ -108,11 +108,10 @@ export default function Chart() {
 
   return (
     <Stack sx={styles.fullWidth}>
-
       <AgeCheckbox onChange={onChangeMaxIndividualContribution} />
-
       <Grid container>
 
+        {/* Left side */}
         <Grid item xs={4}>
           {PAYCHECKS.map((paycheck, idx) => (
             <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
@@ -129,6 +128,7 @@ export default function Chart() {
           ))}
         </Grid>
 
+        {/* Right side */}
         <Grid item xs={8}>
           <IndividualContributionInfo
             cumulativeIndividualContribution={cumulativeIndividualContribution}
@@ -153,13 +153,12 @@ export default function Chart() {
               y={maxIndividualContribution}
               label={`Maximum Individual Contribution: ${currencyFormatter(maxIndividualContribution)}`}
               labelStyle={{ stroke: '#7daba1' }}
-              lineStyle={{ stroke: '#7daba1' }}
+              lineStyle={{ stroke: '#7daba1', strokeWidth: '2', strokeDasharray: '5,5' }}
             />
           </ResponsiveChartContainer>
         </Grid>
 
       </Grid>
-
     </Stack>
   );
 }
