@@ -4,6 +4,8 @@ import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
+import { ChartsTooltip } from '@mui/x-charts/ChartsTooltip';
+import { ChartsAxisHighlight } from '@mui/x-charts/ChartsAxisHighlight';
 import { ChartsReferenceLine } from '@mui/x-charts';
 import { currencyFormatter } from './utils/monetaryCalculations';
 import styles from './styles/Chart';
@@ -14,19 +16,16 @@ export default function Chart({ title, xAxisData, series, maximumContribution, m
       <Typography variant="h5" sx={styles.chartTitle}>{title}</Typography>
       <ResponsiveChartContainer
         series={series}
-        xAxis={[
-          { scaleType: 'band', data: xAxisData, label: 'Paycheck' },
-        ]}
-        yAxis={[
-          { max: maximumContribution * 1.05, valueFormatter: currencyFormatter },
-        ]}
+        xAxis={[{ scaleType: 'band', data: xAxisData, label: 'Paycheck', valueFormatter: (value) => `Contributions up until ${value}` }]}
+        yAxis={[{ max: maximumContribution * 1.05, valueFormatter: currencyFormatter }]}
         height={800}
         margin={{ left: 100 }}
-        tooltip={{ trigger: 'axis' }}
       >
         <BarPlot />
         <ChartsXAxis />
         <ChartsYAxis />
+        <ChartsTooltip trigger={'axis'} />
+        <ChartsAxisHighlight x={'band'} />
         <ChartsReferenceLine
           y={maximumContribution}
           label={`${maximumContributionLabel}: ${currencyFormatter(maximumContribution)}`}
