@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_NumberInput';
 import { styled } from '@mui/system';
 import RemoveIcon from '@mui/icons-material/Remove';

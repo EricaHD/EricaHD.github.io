@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Box, styled } from '@mui/system';
 import { Unstable_NumberInput as BaseNumberInput, numberInputClasses } from '@mui/base/Unstable_NumberInput';
 import { blue, grey } from './utils/colors';

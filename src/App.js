@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Header';
 import Chart from './Chart';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <Chart />
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <div>
+      <Header />
+      <Chart />
+    </div>
+  );
 }
-
-export default App;
