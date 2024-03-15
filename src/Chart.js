@@ -1,8 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
@@ -12,6 +10,7 @@ import { BarChart, BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 import { useDrawingArea } from '@mui/x-charts/hooks';
+import AgeCheckbox from './AgeCheckbox';
 import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations.js';
@@ -107,14 +106,7 @@ export default function Chart() {
   return (
     <Stack sx={styles.fullWidth}>
 
-      <FormControlLabel
-        control={
-          <Checkbox onChange={onChangeMaxIndividualContribution} />
-        }
-        label="Check this box if you will be 50 or older by the end of the calendar year"
-        labelPlacement="end"
-        sx={styles.ageCheckbox}
-      />
+      <AgeCheckbox onChange={onChangeMaxIndividualContribution} />
 
       <Grid container>
 
