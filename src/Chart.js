@@ -11,7 +11,7 @@ import { BarChart, BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 import { useDrawingArea } from '@mui/x-charts/hooks';
-import BaseSalaryInput from './BaseSalaryInput';
+import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations.js';
 import { pastelColors } from './utils/colors';
@@ -22,6 +22,34 @@ const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
 const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 
 export default function Chart() {
+
+  const paychecks = [
+    "Jan #1",
+    "Jan #2",
+    "Feb #1",
+    "Feb #2",
+    "STI",
+    "Mar #1",
+    "Mar #2",
+    "Apr #1",
+    "Apr #2",
+    "May #1",
+    "May #2",
+    "Jun #1",
+    "Jun #2",
+    "Jul #1",
+    "Jul #2",
+    "Aug #1",
+    "Aug #2",
+    "Sept #1",
+    "Sept #2",
+    "Oct #1",
+    "Oct #2",
+    "Nov #1",
+    "Nov #2",
+    "Dec #1",
+    "Dec #2",
+  ];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // STATE                                                                                                            //
@@ -84,7 +112,7 @@ export default function Chart() {
   ];
 
   // TODO make this user input
-  const individualContributionPercentages = [
+  const contributionPercentages = [
     0.13, // Jan #1
     0.13, // Jan #2
     0.13, // Feb #1
@@ -116,39 +144,11 @@ export default function Chart() {
   // DATA                                                                                                             //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const paychecks = [
-    "Jan #1",
-    "Jan #2",
-    "Feb #1",
-    "Feb #2",
-    "STI",
-    "Mar #1",
-    "Mar #2",
-    "Apr #1",
-    "Apr #2",
-    "May #1",
-    "May #2",
-    "Jun #1",
-    "Jun #2",
-    "Jul #1",
-    "Jul #2",
-    "Aug #1",
-    "Aug #2",
-    "Sept #1",
-    "Sept #2",
-    "Oct #1",
-    "Oct #2",
-    "Nov #1",
-    "Nov #2",
-    "Dec #1",
-    "Dec #2",
-  ];
-
   let cumulativeIndividualContribution = 0;
   const series = [];
   for (let i = 0; i < paychecks.length; i++) {
     const incomeThisPaycheck = paychecks[i] === 'STI' ? income[i] : income[i] / 24;
-    let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * individualContributionPercentages[i]);
+    let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentages[i]);
     if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
       const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
       contributionThisPaycheck -= overage;
@@ -185,7 +185,7 @@ export default function Chart() {
 
       <Stack direction="row" sx={styles.paycheckSection}>
         <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paychecks[0]}</Typography>
-        <BaseSalaryInput onChange={onChangeBaseSalary} />
+        <IncomeInput onChange={onChangeBaseSalary} />
         <ContributionPercentageInput onChange={setContributionPercentage} />
       </Stack>
 

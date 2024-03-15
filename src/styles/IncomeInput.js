@@ -2,7 +2,7 @@ export default {
   inputAdornment: {
     float: 'left',
   },
-  baseSalaryInputStack: {
+  incomeInputStack: {
     margin: 2,
   },
 };
