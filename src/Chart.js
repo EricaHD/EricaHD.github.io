@@ -43,7 +43,6 @@ export default function Chart() {
   const onChangeMaxIndividualContribution = (event) => {
     const newMaxIndividualContribution = event.target.checked ? FIFTY_OR_OLDER_MAX_CONTRIBUTION : UNDER_FIFTY_MAX_CONTRIBUTION;
     setMaxIndividualContribution(newMaxIndividualContribution);
-    setSeries(calculateSeries(newMaxIndividualContribution, income, contributionPercentage));
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +57,6 @@ export default function Chart() {
     const newValue = (value === null) ? 0 : value;
     const newIncome = Object.assign([...income], { [idx]: newValue });
     setIncome(newIncome);
-    setSeries(calculateSeries(maxIndividualContribution, newIncome, contributionPercentage));
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,21 +69,22 @@ export default function Chart() {
     const newValue = (value === null) ? 0 : value;
     const newContributionPercentage = Object.assign([...contributionPercentage], { [idx]: newValue });
     setContributionPercentage(newContributionPercentage);
-    setSeries(calculateSeries(maxIndividualContribution, income, newContributionPercentage));
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // DATA - SERIES                                                                                                    //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const calculateSeries = (_maxIndividualContribution, _income, _contributionPercentage) => {
+  const [series, setSeries] = React.useState([]);
+
+  React.useEffect(() => {
     let cumulativeIndividualContribution = 0;
     const newSeries = [];
     for (let i = 0; i < NUM_PAYCHECKS; i++) {
-      const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? _income[i] : _income[i] / 24.0;
-      let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * _contributionPercentage[i] / 100.0);
-      if (cumulativeIndividualContribution + contributionThisPaycheck > _maxIndividualContribution) {
-        const overage = cumulativeIndividualContribution + contributionThisPaycheck - _maxIndividualContribution
+      const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? income[i] : income[i] / 24.0;
+      let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
+      if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
+        const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
         contributionThisPaycheck -= overage;
       }
       cumulativeIndividualContribution += contributionThisPaycheck;
@@ -98,10 +97,8 @@ export default function Chart() {
         color: pastelColors[i % pastelColors.length],
       });
     }
-    return newSeries;
-  }
-
-  const [series, setSeries] = React.useState(calculateSeries(maxIndividualContribution, income, contributionPercentage));
+    setSeries(newSeries);
+  }, [maxIndividualContribution, income, contributionPercentage]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // RETURN                                                                                                           //
