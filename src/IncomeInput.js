@@ -35,7 +35,7 @@ export default function IncomeInput({ value, onChange }) {
       <Typography variant="caption">Base salary</Typography>
       <NumberInput
         startAdornment={<InputAdornment sx={styles.inputAdornment}>$</InputAdornment>}
-        onChange={(event, val) => onChange(val)}
+        onChange={(event, val) => onChange(event, val)}
         min={0}
         defaultValue={value}
       />

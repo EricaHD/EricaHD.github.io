@@ -35,57 +35,73 @@ const NUM_PAYCHECKS = PAYCHECKS.length;
 export default function Chart() {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // STATE                                                                                                            //
+  // STATE - AGE & MAX CONTRIBUTION                                                                                   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const [fiftyOrOlder, setFiftyOrOlder] = React.useState(false);
   const [maxIndividualContribution, setMaxIndividualContribution] = React.useState(UNDER_FIFTY_MAX_CONTRIBUTION);
 
-  const onChangeFiftyOrOlder = (event) => {
-    setFiftyOrOlder(event.target.checked);
-    const maxContribution = event.target.checked ? FIFTY_OR_OLDER_MAX_CONTRIBUTION : UNDER_FIFTY_MAX_CONTRIBUTION;
-    setMaxIndividualContribution(maxContribution);
+  const onChangeMaxIndividualContribution = (event) => {
+    const newMaxIndividualContribution = event.target.checked ? FIFTY_OR_OLDER_MAX_CONTRIBUTION : UNDER_FIFTY_MAX_CONTRIBUTION;
+    setMaxIndividualContribution(newMaxIndividualContribution);
+    setSeries(calculateSeries(newMaxIndividualContribution, income, contributionPercentage));
   }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // STATE - INCOME                                                                                                   //
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const initialIncomeArray = Array(NUM_PAYCHECKS).fill(DEFAULT_BASE_SALARY);
   initialIncomeArray[PAYCHECKS.indexOf(STI_STRING)] = DEFAULT_STI;
   const [income, setIncome] = React.useState(initialIncomeArray);
 
-  const onChangeIncome = (idx, value) => {
+  const onChangeIncome = (idx, event, value) => {
     const newValue = (value === null) ? 0 : value;
-    setIncome(Object.assign([...income], { [idx]: newValue }));
+    const newIncome = Object.assign([...income], { [idx]: newValue });
+    setIncome(newIncome);
+    setSeries(calculateSeries(maxIndividualContribution, newIncome, contributionPercentage));
   }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // STATE - CONTRIBUTION PERCENTAGES                                                                                 //
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [contributionPercentage, setContributionPercentage] = React.useState(Array(NUM_PAYCHECKS).fill(12));
 
-  const onChangeContributionPercentage = (idx, value) => {
+  const onChangeContributionPercentage = (idx, event, value) => {
     const newValue = (value === null) ? 0 : value;
-    setContributionPercentage(Object.assign([...contributionPercentage], { [idx]: newValue }));
+    const newContributionPercentage = Object.assign([...contributionPercentage], { [idx]: newValue });
+    setContributionPercentage(newContributionPercentage);
+    setSeries(calculateSeries(maxIndividualContribution, income, newContributionPercentage));
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // DATA                                                                                                             //
+  // DATA - SERIES                                                                                                    //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  let cumulativeIndividualContribution = 0;
-  const series = [];
-  for (let i = 0; i < NUM_PAYCHECKS; i++) {
-    const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? income[i] : income[i] / 24;
-    let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
-    if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
-      const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
-      contributionThisPaycheck -= overage;
+  const calculateSeries = (_maxIndividualContribution, _income, _contributionPercentage) => {
+    let cumulativeIndividualContribution = 0;
+    const newSeries = [];
+    for (let i = 0; i < NUM_PAYCHECKS; i++) {
+      const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? _income[i] : _income[i] / 24.0;
+      let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * _contributionPercentage[i] / 100.0);
+      if (cumulativeIndividualContribution + contributionThisPaycheck > _maxIndividualContribution) {
+        const overage = cumulativeIndividualContribution + contributionThisPaycheck - _maxIndividualContribution
+        contributionThisPaycheck -= overage;
+      }
+      cumulativeIndividualContribution += contributionThisPaycheck;
+      newSeries.push({
+        label: PAYCHECKS[i],
+        data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(contributionThisPaycheck)),
+        type: 'bar',
+        stack: 'IndividualContributionStack',
+        valueFormatter: currencyFormatter,
+        color: pastelColors[i % pastelColors.length],
+      });
     }
-    cumulativeIndividualContribution += contributionThisPaycheck;
-    series.push({
-      label: PAYCHECKS[i],
-      data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(contributionThisPaycheck)),
-      type: 'bar',
-      stack: 'IndividualContributionStack',
-      valueFormatter: currencyFormatter,
-      color: pastelColors[i % pastelColors.length],
-    });
+    return newSeries;
   }
+
+  const [series, setSeries] = React.useState(calculateSeries(maxIndividualContribution, income, contributionPercentage));
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // RETURN                                                                                                           //
@@ -96,9 +112,8 @@ export default function Chart() {
 
       <Stack direction="row">
         <FormControlLabel
-          checked={fiftyOrOlder}
           control={
-            <Checkbox onChange={onChangeFiftyOrOlder} />
+            <Checkbox onChange={onChangeMaxIndividualContribution} />
           }
           label="Check this box if you will be 50 or older by the end of the calendar year"
           labelPlacement="end"
@@ -112,10 +127,10 @@ export default function Chart() {
             <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
           </Grid>
           <Grid item xs={5}>
-            <IncomeInput value={income[idx]} onChange={(val) => onChangeIncome(idx, val)} />
+            <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
           </Grid>
           <Grid item xs={4}>
-            <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(val) => onChangeContributionPercentage(idx, val)} />
+            <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
           </Grid>
         </Grid>
       ))}

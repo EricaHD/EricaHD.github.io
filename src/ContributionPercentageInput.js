@@ -38,7 +38,7 @@ export default function ContributionPercentageInput({ value, onChange }) {
       <Typography variant="caption">Retirement contribution</Typography>
       <NumberInput
         endAdornment={<InputAdornment>%</InputAdornment>}
-        onChange={(event, val) => onChange(val)}
+        onChange={(event, val) => onChange(event, val)}
         min={0}
         max={100}
         defaultValue={value}
