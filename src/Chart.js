@@ -15,7 +15,7 @@ import BaseSalary from './BaseSalaryInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations.js';
 import { pastelColors } from './utils/colors';
-import styles from './Chart.styles';
+import styles from './styles/Chart';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;

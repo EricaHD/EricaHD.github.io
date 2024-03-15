@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Typography from '@mui/material/Typography';
-import styles from './Header.styles';
+import styles from './styles/Header';
 
 class Header extends Component {
   render() {
