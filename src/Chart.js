@@ -25,35 +25,14 @@ const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 const DEFAULT_BASE_SALARY = 100000;
 const DEFAULT_STI = 15000;
 
-export default function Chart() {
+const STI_STRING = 'STI';
+const PAYCHECKS = [
+  "Jan #1", "Jan #2", "Feb #1", "Feb #2", STI_STRING, "Mar #1", "Mar #2", "Apr #1", "Apr #2", "May #1", "May #2", "Jun #1", "Jun #2",
+  "Jul #1", "Jul #2", "Aug #1", "Aug #2", "Sept #1", "Sept #2", "Oct #1", "Oct #2", "Nov #1", "Nov #2", "Dec #1", "Dec #2",
+];
+const NUM_PAYCHECKS = PAYCHECKS.length;
 
-  const paychecks = [
-    "Jan #1",
-    "Jan #2",
-    "Feb #1",
-    "Feb #2",
-    "STI",
-    "Mar #1",
-    "Mar #2",
-    "Apr #1",
-    "Apr #2",
-    "May #1",
-    "May #2",
-    "Jun #1",
-    "Jun #2",
-    "Jul #1",
-    "Jul #2",
-    "Aug #1",
-    "Aug #2",
-    "Sept #1",
-    "Sept #2",
-    "Oct #1",
-    "Oct #2",
-    "Nov #1",
-    "Nov #2",
-    "Dec #1",
-    "Dec #2",
-  ];
+export default function Chart() {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // STATE                                                                                                            //
@@ -68,8 +47,8 @@ export default function Chart() {
     setMaxIndividualContribution(maxContribution);
   }
 
-  const initialIncomeArray = Array(paychecks.length).fill(DEFAULT_BASE_SALARY);
-  initialIncomeArray[paychecks.indexOf('STI')] = DEFAULT_STI;
+  const initialIncomeArray = Array(NUM_PAYCHECKS).fill(DEFAULT_BASE_SALARY);
+  initialIncomeArray[PAYCHECKS.indexOf(STI_STRING)] = DEFAULT_STI;
   const [income, setIncome] = React.useState(initialIncomeArray);
 
   const onChangeIncome = (idx, value) => {
@@ -77,7 +56,7 @@ export default function Chart() {
     setIncome(Object.assign([...income], { [idx]: newValue }));
   }
 
-  const [contributionPercentage, setContributionPercentage] = React.useState(Array(paychecks.length).fill(12));
+  const [contributionPercentage, setContributionPercentage] = React.useState(Array(NUM_PAYCHECKS).fill(12));
 
   const onChangeContributionPercentage = (idx, value) => {
     const newValue = (value === null) ? 0 : value;
@@ -90,8 +69,8 @@ export default function Chart() {
 
   let cumulativeIndividualContribution = 0;
   const series = [];
-  for (let i = 0; i < paychecks.length; i++) {
-    const incomeThisPaycheck = paychecks[i] === 'STI' ? income[i] : income[i] / 24;
+  for (let i = 0; i < NUM_PAYCHECKS; i++) {
+    const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? income[i] : income[i] / 24;
     let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
     if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
       const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
@@ -99,8 +78,8 @@ export default function Chart() {
     }
     cumulativeIndividualContribution += contributionThisPaycheck;
     series.push({
-      label: paychecks[i],
-      data: (Array(i).fill(0)).concat(Array(paychecks.length - i).fill(contributionThisPaycheck)),
+      label: PAYCHECKS[i],
+      data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(contributionThisPaycheck)),
       type: 'bar',
       stack: 'IndividualContributionStack',
       valueFormatter: currencyFormatter,
@@ -127,7 +106,7 @@ export default function Chart() {
         />
       </Stack>
 
-      {paychecks.map((paycheck, idx) => (
+      {PAYCHECKS.map((paycheck, idx) => (
         <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
           <Grid item xs={3}>
             <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
@@ -139,13 +118,13 @@ export default function Chart() {
             <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(val) => onChangeContributionPercentage(idx, val)} />
           </Grid>
         </Grid>
-      ))};
+      ))}
 
       <Box sx={styles.chartBox}>
         <ResponsiveChartContainer
           series={series}
           xAxis={[
-            { scaleType: 'band', data: paychecks, label: 'Paycheck' },
+            { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
           ]}
           yAxis={[
             { max: maxIndividualContribution + 1000, valueFormatter: currencyFormatter },
