@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, styled } from '@mui/system';
 import { Unstable_NumberInput as BaseNumberInput, numberInputClasses } from '@mui/base/Unstable_NumberInput';
 import { blue, grey } from './utils/colors';
+import styles from './styles/BaseSalaryInput';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -30,10 +31,10 @@ export default function BaseSalaryInput() {
   const [value, setValue] = React.useState(null);
   return (
     <NumberInput
-      startAdornment={<InputAdornment sx={{ float: 'left' }}>$</InputAdornment>}
+      startAdornment={<InputAdornment sx={styles.inputAdornment}>$</InputAdornment>}
       onChange={(event, val) => setValue(val)}
       min={0}
-      sx={{ margin: 2 }}
+      sx={styles.numberInput}
     />
   );
 }

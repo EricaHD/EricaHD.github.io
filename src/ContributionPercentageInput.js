@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { blue, grey } from './utils/colors';
+import styles from './styles/ContributionPercentageInput';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -37,7 +38,7 @@ export default function ContributionPercentageInput() {
       onChange={(event, val) => setValue(val)}
       min={0}
       max={100}
-      sx={{ margin: 3 }}
+      sx={styles.numberInput}
     />
   );
 }
