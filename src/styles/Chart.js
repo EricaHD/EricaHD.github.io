@@ -6,8 +6,10 @@ export default {
     margin: 'auto'
   },
   paycheckSection: {
-    margin: 'auto',
-    borderBottom: '1px solid lightgray',
+    margin: '10px auto',
+    padding: '0 15px',
+    background: '#f7f7f7',
+    borderRadius: 4,
   },
   paycheckSectionTitle: {
     color: '#3f434a',

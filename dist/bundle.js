@@ -2458,7 +2458,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\n  fullWidth: {\n    width: '100%'\n  },\n  centered: {\n    margin: 'auto'\n  },\n  paycheckSection: {\n    margin: 'auto',\n    borderBottom: '1px solid lightgray'\n  },\n  paycheckSectionTitle: {\n    color: '#3f434a',\n    display: 'flex',\n    flexDirection: 'column',\n    justifyContent: 'center',\n    marginRight: '15px'\n  },\n  chartBox: {\n    width: '80%',\n    margin: 'auto'\n  }\n});\n\n//# sourceURL=webpack://ericahd.github.io/./src/styles/Chart.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\n  fullWidth: {\n    width: '100%'\n  },\n  centered: {\n    margin: 'auto'\n  },\n  paycheckSection: {\n    margin: '10px auto',\n    padding: '0 15px',\n    background: '#f7f7f7',\n    borderRadius: 4\n  },\n  paycheckSectionTitle: {\n    color: '#3f434a',\n    display: 'flex',\n    flexDirection: 'column',\n    justifyContent: 'center',\n    marginRight: '15px'\n  },\n  chartBox: {\n    width: '80%',\n    margin: 'auto'\n  }\n});\n\n//# sourceURL=webpack://ericahd.github.io/./src/styles/Chart.js?");
 
 /***/ }),
 
