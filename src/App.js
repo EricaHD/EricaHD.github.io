@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from './Header';
-import Chart from './Chart';
+import Content from './Content';
 
 export default function App() {
   return (
     <div>
       <Header />
-      <Chart />
+      <Content />
     </div>
   );
 }

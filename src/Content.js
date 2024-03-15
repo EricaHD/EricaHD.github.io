@@ -33,7 +33,7 @@ const PAYCHECKS = [
 const STI_INDEX = PAYCHECKS.indexOf(STI_STRING);
 const NUM_PAYCHECKS = PAYCHECKS.length;
 
-export default function Chart() {
+export default function Content() {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // STATE - AGE & MAX CONTRIBUTION                                                                                   //
