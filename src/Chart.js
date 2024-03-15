@@ -21,6 +21,9 @@ const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
 const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 
+const DEFAULT_BASE_SALARY = 100000;
+const DEFAULT_STI = 15000;
+
 export default function Chart() {
 
   const paychecks = [
@@ -64,81 +67,21 @@ export default function Chart() {
     setMaxIndividualContribution(maxContribution);
   }
 
-  const [baseSalary, setBaseSalary] = React.useState(0);
+  const initialIncomeArray = Array(paychecks.length).fill(DEFAULT_BASE_SALARY);
+  initialIncomeArray[paychecks.indexOf('STI')] = DEFAULT_STI;
+  const [income, setIncome] = React.useState(initialIncomeArray);
 
-  const onChangeBaseSalary = (value) => {
+  const onChangeIncome = (idx, value) => {
     const newValue = (value === null) ? 0 : value;
-    setBaseSalary(newValue);
+    setIncome(Object.assign([...income], { [idx]: newValue }));
   }
 
-  const [contributionPercentage, setContributionPercentage] = React.useState(0);
+  const [contributionPercentage, setContributionPercentage] = React.useState(Array(paychecks.length).fill(12));
 
-  const onChangeContributionPercentage = (value) => {
-    const newValue = (vaule === null) ? 0 : value;
-    setContributionPercentage(newValue);
+  const onChangeContributionPercentage = (idx, value) => {
+    const newValue = (value === null) ? 0 : value;
+    setContributionPercentage(Object.assign([...contributionPercentage], { [idx]: newValue }));
   }
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // USER INPUT                                                                                                       //
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // TODO make this user input
-  const income = [
-    161500, // Jan #1
-    161500, // Jan #2
-    161500, // Feb #1
-    161500, // Feb #2
-    15865,  // STI
-    165895, // Mar #1
-    165895, // Mar #2
-    165895, // Apr #1
-    165895, // Apr #2
-    165895, // May #1
-    165895, // May #2
-    165895, // Jun #1
-    165895, // Jun #2
-    165895, // Jul #1
-    165895, // Jul #2
-    165895, // Aug #1
-    165895, // Aug #2
-    165895, // Sept #1
-    165895, // Sept #2
-    165895, // Oct #1
-    165895, // Oct #2
-    165895, // Nov #1
-    165895, // Nov #2
-    165895, // Dec #1
-    165895, // Dec #2
-  ];
-
-  // TODO make this user input
-  const contributionPercentages = [
-    0.13, // Jan #1
-    0.13, // Jan #2
-    0.13, // Feb #1
-    0.13, // Feb #2
-    0.13, // STI
-    0.13, // Mar #1
-    0.13, // Mar #2
-    0.13, // Apr #1
-    0.13, // Apr #2
-    0.13, // May #1
-    0.13, // May #2
-    0.13, // Jun #1
-    0.13, // Jun #2
-    0.13, // Jul #1
-    0.13, // Jul #2
-    0.13, // Aug #1
-    0.13, // Aug #2
-    0.13, // Sept #1
-    0.13, // Sept #2
-    0.13, // Oct #1
-    0.13, // Oct #2
-    0.13, // Nov #1
-    0.13, // Nov #2
-    0.13, // Dec #1
-    0.13, // Dec #2
-  ];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // DATA                                                                                                             //
@@ -148,7 +91,7 @@ export default function Chart() {
   const series = [];
   for (let i = 0; i < paychecks.length; i++) {
     const incomeThisPaycheck = paychecks[i] === 'STI' ? income[i] : income[i] / 24;
-    let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentages[i]);
+    let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
     if (cumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
       const overage = cumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
       contributionThisPaycheck -= overage;
@@ -183,11 +126,13 @@ export default function Chart() {
         />
       </Stack>
 
-      <Stack direction="row" sx={styles.paycheckSection}>
-        <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paychecks[0]}</Typography>
-        <IncomeInput onChange={onChangeBaseSalary} />
-        <ContributionPercentageInput onChange={setContributionPercentage} />
-      </Stack>
+      {paychecks.map((paycheck, idx) => (
+        <Stack key={paycheck} direction="row" sx={styles.paycheckSection}>
+          <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
+          <IncomeInput value={income[idx]} onChange={(val) => onChangeIncome(idx, val)} />
+          <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(val) => onChangeContributionPercentage(idx, val)} />
+        </Stack>
+      ))};
 
       <Box sx={styles.chartBox}>
         <ResponsiveChartContainer
