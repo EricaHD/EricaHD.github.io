@@ -10,7 +10,7 @@ import CumulativeContributionInfo from './CumulativeContributionInfo';
 import Chart from './Chart';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
-import styles from './styles/Chart';
+import styles from './styles/Content';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
@@ -162,25 +162,27 @@ export default function Content() {
             <CumulativeContributionInfo
               cumulativeContribution={cumulativeIndividualContribution}
               maximumContribution={maxIndividualContribution}
-              individualOrCompany='individual'
+              individualOrCompany={'individual'}
             />
             <CumulativeContributionInfo
               cumulativeContribution={cumulativeCompanyContribution}
               maximumContribution={maxCompanyContribution}
-              individualOrCompany='company'
+              individualOrCompany={'company'}
             />
           </Stack>
           <Chart
+            title={'Individual Contributions'}
             xAxisData={PAYCHECKS}
             series={individualSeries}
             maximumContribution={maxIndividualContribution}
-            maximumContributionLabel='Maximum Individual Contribution'
+            maximumContributionLabel={'Maximum Individual Contribution'}
           />
           <Chart
+            title={'Company Contributions'}
             xAxisData={PAYCHECKS}
             series={companySeries}
             maximumContribution={maxCompanyContribution}
-            maximumContributionLabel='Maximum Company Contribution'
+            maximumContributionLabel={'Maximum Company Contribution'}
           />
         </Grid>
 
