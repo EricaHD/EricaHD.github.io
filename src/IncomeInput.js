@@ -19,10 +19,10 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function IncomeInput({ value, onChange }) {
+export default function IncomeInput({ label, value, onChange }) {
   return (
     <Stack direction="column" sx={styles.incomeInputStack}>
-      <Typography variant="caption">Base salary</Typography>
+      <Typography variant="caption">{label}</Typography>
       <NumberInput
         startAdornment={<InputAdornment sx={styles.inputAdornment}>$</InputAdornment>}
         onChange={(event, val) => onChange(event, val)}

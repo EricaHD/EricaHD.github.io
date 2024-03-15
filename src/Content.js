@@ -148,7 +148,7 @@ export default function Content() {
                 <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
               </Grid>
               <Grid item xs={4.5}>
-                <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
+                <IncomeInput label={(idx === STI_INDEX) ? 'STI grant' : 'Annual base salary'} value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
               </Grid>
               <Grid item xs={5}>
                 <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
