@@ -1,13 +1,10 @@
 export default {
-  title: {
-    textAlign: 'center',
-    backgroundColor: '#e8e4e3',
+  headerBackground: {
+    background: '#d0d0d0',
+    borderRadius: 2,
     paddingTop: 2,
-  },
-  subtitle: {
-    textAlign: 'center',
-    backgroundColor: '#e8e4e3',
     paddingBottom: 3,
     marginBottom: 3,
+    textAlign: 'center',
   },
 };

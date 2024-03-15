@@ -1,16 +1,17 @@
 import React from 'react';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import styles from './styles/Header';
 
 export default function Header() {
   return (
-    <div>
-      <Typography variant="h3" sx={styles.title}>
+    <Box sx={styles.headerBackground}>
+      <Typography variant="h3">
         Retirement Contribution Calculator
       </Typography>
-      <Typography variant="h6" sx={styles.subtitle}>
+      <Typography variant="h6">
         with a 2% per-paycheck match from your company
       </Typography>
-    </div>
+    </Box>
   );
 }
