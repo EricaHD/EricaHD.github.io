@@ -14,7 +14,7 @@ import AgeCheckbox from './AgeCheckbox';
 import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import IndividualContributionInfo from './IndividualContributionInfo';
-import { roundToNearestCent, currencyFormatter } from './utils/monetaryCalculations';
+import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Chart';
 
@@ -30,6 +30,7 @@ const PAYCHECKS = [
   "Jan #1", "Jan #2", "Feb #1", "Feb #2", STI_STRING, "Mar #1", "Mar #2", "Apr #1", "Apr #2", "May #1", "May #2", "Jun #1", "Jun #2",
   "Jul #1", "Jul #2", "Aug #1", "Aug #2", "Sept #1", "Sept #2", "Oct #1", "Oct #2", "Nov #1", "Nov #2", "Dec #1", "Dec #2",
 ];
+const STI_INDEX = PAYCHECKS.indexOf(STI_STRING);
 const NUM_PAYCHECKS = PAYCHECKS.length;
 
 export default function Chart() {
@@ -50,13 +51,15 @@ export default function Chart() {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const initialIncomeArray = Array(NUM_PAYCHECKS).fill(DEFAULT_BASE_SALARY);
-  initialIncomeArray[PAYCHECKS.indexOf(STI_STRING)] = DEFAULT_STI;
+  initialIncomeArray[STI_INDEX] = DEFAULT_STI;
   const [income, setIncome] = React.useState(initialIncomeArray);
+  const [maxCompanyContribution, setMaxCompanyContribution] = React.useState(twoPercentOfIncome(initialIncomeArray, STI_INDEX));
 
   const onChangeIncome = (idx, event, value) => {
     const newValue = (value === null) ? 0 : value;
     const newIncome = Object.assign([...income], { [idx]: newValue });
     setIncome(newIncome);
+    setMaxCompanyContribution(twoPercentOfIncome(newIncome, STI_INDEX));
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,34 +75,65 @@ export default function Chart() {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // DATA - SERIES                                                                                                    //
+  // DATA - CHART DATA                                                                                                //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const [series, setSeries] = React.useState([]);
+  const [individualSeries, setIndividualSeries] = React.useState([]);
+  const [companySeries, setCompanySeries] = React.useState([]);
   const [cumulativeIndividualContribution, setCumulativeIndividualContribution] = React.useState(0);
+  const [cumulativeCompanyContribution, setCumulativeCompanyContribution] = React.useState(0);
 
   React.useEffect(() => {
     let newCumulativeIndividualContribution = 0;
-    const newSeries = [];
+    let newCumulativeCompanyContribution = 0;
+
+    const newIndividualSeries = [];
+    const newCompanySeries = [];
     for (let i = 0; i < NUM_PAYCHECKS; i++) {
+      // Income
       const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? income[i] : income[i] / 24.0;
-      let contributionThisPaycheck = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
-      if (newCumulativeIndividualContribution + contributionThisPaycheck > maxIndividualContribution) {
-        const overage = newCumulativeIndividualContribution + contributionThisPaycheck - maxIndividualContribution
-        contributionThisPaycheck -= overage;
+
+      // Individual contribution
+      let individualContribution = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
+      if (newCumulativeIndividualContribution + individualContribution > maxIndividualContribution) {
+        const overage = newCumulativeIndividualContribution + individualContribution - maxIndividualContribution
+        individualContribution -= overage;
       }
-      newCumulativeIndividualContribution += contributionThisPaycheck;
-      newSeries.push({
+
+      // Company contribution
+      let companyContribution = roundToNearestCent(incomeThisPaycheck * 0.02);
+      if (companyContribution > individualContribution) {
+        companyContribution = individualContribution;
+      }
+
+      // Update cumulative contributions
+      newCumulativeIndividualContribution += individualContribution;
+      newCumulativeCompanyContribution += companyContribution;
+
+      // Sries
+      newIndividualSeries.push({
         label: PAYCHECKS[i],
-        data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(contributionThisPaycheck)),
+        data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(individualContribution)),
         type: 'bar',
         stack: 'IndividualContributionStack',
         valueFormatter: currencyFormatter,
         color: pastelColors[i % pastelColors.length],
       });
+      newCompanySeries.push({
+        label: PAYCHECKS[i],
+        data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(companyContribution)),
+        type: 'bar',
+        stack: 'CompanyContributionStack',
+        valueFormatter: currencyFormatter,
+        color: pastelColors[i % pastelColors.length],
+      })
     }
-    setSeries(newSeries);
+
+    // State setters
+    setIndividualSeries(newIndividualSeries);
+    setCompanySeries(newCompanySeries);
     setCumulativeIndividualContribution(newCumulativeIndividualContribution);
+    setCumulativeCompanyContribution(newCumulativeCompanyContribution);
   }, [maxIndividualContribution, income, contributionPercentage]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +169,7 @@ export default function Chart() {
             maxIndividualContribution={maxIndividualContribution}
           />
           <ResponsiveChartContainer
-            series={series}
+            series={individualSeries}
             xAxis={[
               { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
             ]}
@@ -152,6 +186,28 @@ export default function Chart() {
             <ChartsReferenceLine
               y={maxIndividualContribution}
               label={`Maximum Individual Contribution: ${currencyFormatter(maxIndividualContribution)}`}
+              labelStyle={{ stroke: '#7daba1' }}
+              lineStyle={{ stroke: '#7daba1', strokeWidth: '2', strokeDasharray: '5,5' }}
+            />
+          </ResponsiveChartContainer>
+          <ResponsiveChartContainer
+            series={companySeries}
+            xAxis={[
+              { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
+            ]}
+            yAxis={[
+              { max: maxCompanyContribution + 500, valueFormatter: currencyFormatter },
+            ]}
+            height={800}
+            margin={{ left: 100 }}
+            tooltip={{ trigger: 'axis' }}
+          >
+            <BarPlot />
+            <ChartsXAxis />
+            <ChartsYAxis />
+            <ChartsReferenceLine
+              y={maxCompanyContribution}
+              label={`Maximum Company Contribution: ${currencyFormatter(maxCompanyContribution)}`}
               labelStyle={{ stroke: '#7daba1' }}
               lineStyle={{ stroke: '#7daba1', strokeWidth: '2', strokeDasharray: '5,5' }}
             />
