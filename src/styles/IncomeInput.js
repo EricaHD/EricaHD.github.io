@@ -3,6 +3,6 @@ export default {
     float: 'left',
   },
   incomeInputStack: {
-    margin: 2,
+    margin: '4px 16px',
   },
 };

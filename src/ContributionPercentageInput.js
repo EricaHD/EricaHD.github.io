@@ -84,7 +84,7 @@ const StyledInput = styled('input')(
   };
   border-radius: 8px;
   margin: 0 8px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   outline: 0;
   min-width: 0;
   width: 4rem;

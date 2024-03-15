@@ -15,8 +15,4 @@ export default {
   paycheckSectionTitle: {
     color: '#3f434a',
   },
-  chartBox: {
-    width: '80%',
-    margin: 'auto',
-  },
 };

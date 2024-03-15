@@ -1,5 +1,5 @@
 export default {
   contributionPercentageInputStack: {
-    margin: 2,
+    margin: '4px 16px',
   },
 };

@@ -118,44 +118,50 @@ export default function Chart() {
         />
       </Stack>
 
-      {PAYCHECKS.map((paycheck, idx) => (
-        <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
-          <Grid item xs={3}>
-            <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
-          </Grid>
-          <Grid item xs={4}>
-            <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
-          </Grid>
-        </Grid>
-      ))}
+      <Grid container>
 
-      <Box sx={styles.chartBox}>
-        <ResponsiveChartContainer
-          series={series}
-          xAxis={[
-            { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
-          ]}
-          yAxis={[
-            { max: maxIndividualContribution + 1000, valueFormatter: currencyFormatter },
-          ]}
-          height={800}
-          margin={{ left: 100 }}
-          tooltip={{ trigger: 'axis' }}
-        >
-          <BarPlot />
-          <ChartsXAxis />
-          <ChartsYAxis />
-          <ChartsReferenceLine
-            y={maxIndividualContribution}
-            label={`Maximum Individual Contribution: ${currencyFormatter(maxIndividualContribution)}`}
-            labelStyle={{ stroke: '#7daba1' }}
-            lineStyle={{ stroke: '#7daba1' }}
-          />
-        </ResponsiveChartContainer>
-      </Box>
+        <Grid item xs={5}>
+          {PAYCHECKS.map((paycheck, idx) => (
+            <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
+              <Grid item xs={3}>
+                <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
+              </Grid>
+              <Grid item xs={5}>
+                <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
+              </Grid>
+              <Grid item xs={4}>
+                <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
+              </Grid>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Grid item xs={7}>
+          <ResponsiveChartContainer
+            series={series}
+            xAxis={[
+              { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
+            ]}
+            yAxis={[
+              { max: maxIndividualContribution + 1000, valueFormatter: currencyFormatter },
+            ]}
+            height={800}
+            margin={{ left: 100 }}
+            tooltip={{ trigger: 'axis' }}
+          >
+            <BarPlot />
+            <ChartsXAxis />
+            <ChartsYAxis />
+            <ChartsReferenceLine
+              y={maxIndividualContribution}
+              label={`Maximum Individual Contribution: ${currencyFormatter(maxIndividualContribution)}`}
+              labelStyle={{ stroke: '#7daba1' }}
+              lineStyle={{ stroke: '#7daba1' }}
+            />
+          </ResponsiveChartContainer>
+        </Grid>
+
+      </Grid>
 
     </Stack>
   );
