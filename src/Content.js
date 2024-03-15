@@ -8,6 +8,7 @@ import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import CumulativeContributionInfo from './CumulativeContributionInfo';
 import Chart from './Chart';
+import SummaryTable from './SummaryTable';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Content';
@@ -183,6 +184,11 @@ export default function Content() {
             series={companySeries}
             maximumContribution={maxCompanyContribution}
             maximumContributionLabel={'Maximum Company Contribution'}
+          />
+          <SummaryTable
+            header={PAYCHECKS}
+            individualContributions={individualSeries.map((elt, idx) => elt['data'][idx])}
+            companyContributions={companySeries.map((elt, idx) => elt['data'][idx])}
           />
         </Grid>
 
