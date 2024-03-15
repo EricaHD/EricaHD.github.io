@@ -107,16 +107,14 @@ export default function Chart() {
   return (
     <Stack sx={styles.fullWidth}>
 
-      <Stack direction="row">
-        <FormControlLabel
-          control={
-            <Checkbox onChange={onChangeMaxIndividualContribution} />
-          }
-          label="Check this box if you will be 50 or older by the end of the calendar year"
-          labelPlacement="end"
-          sx={styles.centered}
-        />
-      </Stack>
+      <FormControlLabel
+        control={
+          <Checkbox onChange={onChangeMaxIndividualContribution} />
+        }
+        label="Check this box if you will be 50 or older by the end of the calendar year"
+        labelPlacement="end"
+        sx={styles.ageCheckbox}
+      />
 
       <Grid container>
 

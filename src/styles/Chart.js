@@ -2,8 +2,8 @@ export default {
   fullWidth: {
     width: '100%',
   },
-  centered: {
-    margin: 'auto'
+  ageCheckbox: {
+    margin: '0 auto 10px',
   },
   paycheckSection: {
     margin: '10px auto',
