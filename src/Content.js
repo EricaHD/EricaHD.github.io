@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import AgeCheckbox from './AgeCheckbox';
 import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
-import IndividualContributionInfo from './IndividualContributionInfo';
+import CumulativeContributionInfo from './CumulativeContributionInfo';
 import Chart from './Chart';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
@@ -158,10 +158,18 @@ export default function Content() {
 
         {/* Right side */}
         <Grid item xs={8}>
-          <IndividualContributionInfo
-            cumulativeIndividualContribution={cumulativeIndividualContribution}
-            maxIndividualContribution={maxIndividualContribution}
-          />
+          <Stack direction="row" spacing={5} justifyContent="center">
+            <CumulativeContributionInfo
+              cumulativeContribution={cumulativeIndividualContribution}
+              maximumContribution={maxIndividualContribution}
+              individualOrCompany='individual'
+            />
+            <CumulativeContributionInfo
+              cumulativeContribution={cumulativeCompanyContribution}
+              maximumContribution={maxCompanyContribution}
+              individualOrCompany='company'
+            />
+          </Stack>
           <Chart
             xAxisData={PAYCHECKS}
             series={individualSeries}

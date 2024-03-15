@@ -1,5 +1,5 @@
 export default {
-  individualContributionInfo: {
+  contributionInfo: {
     color: '#5d8078',
     marginTop: '15px',
     textAlign: 'center',
