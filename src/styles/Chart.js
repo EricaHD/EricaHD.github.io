@@ -10,7 +10,6 @@ export default {
     padding: '0 15px',
     background: '#f7f7f7',
     borderRadius: 4,
-    width: '550px',
   },
   paycheckSectionTitle: {
     color: '#3f434a',

@@ -118,23 +118,23 @@ export default function Chart() {
 
       <Grid container>
 
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           {PAYCHECKS.map((paycheck, idx) => (
             <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
-              <Grid item xs={3}>
+              <Grid item xs={2.5}>
                 <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={4.5}>
                 <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
               </Grid>
             </Grid>
           ))}
         </Grid>
 
-        <Grid item xs={7}>
+        <Grid item xs={8}>
           <ResponsiveChartContainer
             series={series}
             xAxis={[
