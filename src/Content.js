@@ -3,17 +3,11 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
-import { axisClasses, ChartsReferenceLine } from '@mui/x-charts';
-import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
-import { BarChart, BarPlot } from '@mui/x-charts/BarChart';
-import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
-import { useDrawingArea } from '@mui/x-charts/hooks';
 import AgeCheckbox from './AgeCheckbox';
 import IncomeInput from './IncomeInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import IndividualContributionInfo from './IndividualContributionInfo';
+import Chart from './Chart';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Chart';
@@ -168,50 +162,18 @@ export default function Content() {
             cumulativeIndividualContribution={cumulativeIndividualContribution}
             maxIndividualContribution={maxIndividualContribution}
           />
-          <ResponsiveChartContainer
+          <Chart
+            xAxisData={PAYCHECKS}
             series={individualSeries}
-            xAxis={[
-              { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
-            ]}
-            yAxis={[
-              { max: maxIndividualContribution + 1000, valueFormatter: currencyFormatter },
-            ]}
-            height={800}
-            margin={{ left: 100 }}
-            tooltip={{ trigger: 'axis' }}
-          >
-            <BarPlot />
-            <ChartsXAxis />
-            <ChartsYAxis />
-            <ChartsReferenceLine
-              y={maxIndividualContribution}
-              label={`Maximum Individual Contribution: ${currencyFormatter(maxIndividualContribution)}`}
-              labelStyle={{ stroke: '#7daba1' }}
-              lineStyle={{ stroke: '#7daba1', strokeWidth: '2', strokeDasharray: '5,5' }}
-            />
-          </ResponsiveChartContainer>
-          <ResponsiveChartContainer
+            maximumContribution={maxIndividualContribution}
+            maximumContributionLabel='Maximum Individual Contribution'
+          />
+          <Chart
+            xAxisData={PAYCHECKS}
             series={companySeries}
-            xAxis={[
-              { scaleType: 'band', data: PAYCHECKS, label: 'Paycheck' },
-            ]}
-            yAxis={[
-              { max: maxCompanyContribution + 500, valueFormatter: currencyFormatter },
-            ]}
-            height={800}
-            margin={{ left: 100 }}
-            tooltip={{ trigger: 'axis' }}
-          >
-            <BarPlot />
-            <ChartsXAxis />
-            <ChartsYAxis />
-            <ChartsReferenceLine
-              y={maxCompanyContribution}
-              label={`Maximum Company Contribution: ${currencyFormatter(maxCompanyContribution)}`}
-              labelStyle={{ stroke: '#7daba1' }}
-              lineStyle={{ stroke: '#7daba1', strokeWidth: '2', strokeDasharray: '5,5' }}
-            />
-          </ResponsiveChartContainer>
+            maximumContribution={maxCompanyContribution}
+            maximumContributionLabel='Maximum Company Contribution'
+          />
         </Grid>
 
       </Grid>
