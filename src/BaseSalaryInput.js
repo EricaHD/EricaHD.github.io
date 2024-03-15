@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Box, styled } from '@mui/system';
-import {
-  Unstable_NumberInput as BaseNumberInput,
-  numberInputClasses,
-} from '@mui/base/Unstable_NumberInput';
+import { Unstable_NumberInput as BaseNumberInput, numberInputClasses } from '@mui/base/Unstable_NumberInput';
+import { blue, grey } from './utils/colors';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -50,29 +48,6 @@ const InputAdornment = styled('div')(
   color: ${theme.palette.mode === 'dark' ? grey[500] : grey[700]};
 `
 );
-
-const blue = {
-  100: '#DAECFF',
-  200: '#B6DAFF',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-  700: '#0059B2',
-  900: '#003A75',
-};
-
-const grey = {
-  50: '#F3F6F9',
-  100: '#E5EAF2',
-  200: '#DAE2ED',
-  300: '#C7D0DD',
-  400: '#B0B8C4',
-  500: '#9DA8B7',
-  600: '#6B7A90',
-  700: '#434D5B',
-  800: '#303740',
-  900: '#1C2025',
-};
 
 const InputRoot = styled('div')(
   ({ theme }) => `

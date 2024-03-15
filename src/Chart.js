@@ -14,6 +14,7 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import BaseSalary from './BaseSalaryInput';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import { roundToNearestCent, currencyFormatter } from './utils';
+import { pastelColors } from './utils/colors';
 import styles from './Chart.styles';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
@@ -129,15 +130,6 @@ export default function Chart() {
     "Dec #2",
   ];
 
-  const colors = [
-    '#f2c6de', // red
-    '#f7d9c4', // orange
-    '#faedcb', // yellow
-    '#c9e4de', // green
-    '#c6def1', // blue
-    '#dbcdf0', // purple
-  ];
-
   let cumulativeIndividualContribution = 0;
   const series = [];
   for (let i = 0; i < paychecks.length; i++) {
@@ -154,7 +146,7 @@ export default function Chart() {
       type: 'bar',
       stack: 'IndividualContributionStack',
       valueFormatter: currencyFormatter,
-      color: colors[i % colors.length],
+      color: pastelColors[i % pastelColors.length],
     });
   }
 

@@ -3,6 +3,7 @@ import { Unstable_NumberInput as BaseNumberInput } from '@mui/base/Unstable_Numb
 import { styled } from '@mui/system';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { blue, grey } from './utils/colors';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -51,30 +52,6 @@ const InputAdornment = styled('div')(
   color: ${theme.palette.mode === 'dark' ? grey[500] : grey[700]};
 `
 );
-
-const blue = {
-  100: '#daecff',
-  200: '#b6daff',
-  300: '#66b2ff',
-  400: '#3399ff',
-  500: '#007fff',
-  600: '#0072e5',
-  700: '#0059B2',
-  800: '#004c99',
-};
-
-const grey = {
-  50: '#F3F6F9',
-  100: '#E5EAF2',
-  200: '#DAE2ED',
-  300: '#C7D0DD',
-  400: '#B0B8C4',
-  500: '#9DA8B7',
-  600: '#6B7A90',
-  700: '#434D5B',
-  800: '#303740',
-  900: '#1C2025',
-};
 
 const StyledInputRoot = styled('div')(
   ({ theme }) => `
