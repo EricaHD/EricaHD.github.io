@@ -91,7 +91,7 @@ const StyledInput = styled('input')(
   text-align: center;
 
   &:hover {
-    border-color: ${blue[400]};
+    border-color: #000000;
   }
 
   &:focus {
