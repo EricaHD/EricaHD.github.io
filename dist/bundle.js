@@ -3844,7 +3844,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\n  incomeInputStack: {\n    margin: '4px 16px'\n  },\n  outlinedInput: {\n    borderRadius: '8px',\n    height: '37px',\n    background: 'white'\n  }\n});\n\n//# sourceURL=webpack://ericahd.github.io/./src/styles/IncomeInput.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\n  incomeInputStack: {\n    margin: '4px 16px'\n  },\n  outlinedInput: {\n    borderRadius: '8px',\n    height: '37px',\n    background: 'white',\n    // Hide arrows on right side of type=\"number\" input box\n    \"& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button\": {\n      display: \"none\"\n    },\n    \"& input[type=number]\": {\n      MozAppearance: \"textfield\"\n    }\n  }\n});\n\n//# sourceURL=webpack://ericahd.github.io/./src/styles/IncomeInput.js?");
 
 /***/ }),
 

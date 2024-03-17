@@ -6,5 +6,8 @@ export default {
     borderRadius: '8px',
     height: '37px',
     background: 'white',
+    // Hide arrows on right side of type="number" input box
+    "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": { display: "none" },
+    "& input[type=number]": { MozAppearance: "textfield" },
   },
 };
