@@ -95,10 +95,8 @@ const StyledInput = styled('input')(
   }
 
   &:focus {
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${
-      theme.palette.mode === 'dark' ? blue[700] : blue[200]
-    };
+    border-color: #1a76d2;
+    box-shadow: 0 0 0 1px #1a76d2;
   }
 
   &:focus-visible {
