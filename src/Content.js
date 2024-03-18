@@ -17,7 +17,7 @@ const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
 const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 
-const DEFAULT_BASE_SALARY = 120000;
+const DEFAULT_INCOME = 5000;
 const DEFAULT_STI = 15000;
 
 const STI_STRING = 'STI';
@@ -45,7 +45,7 @@ export default function Content() {
   // STATE - INCOME                                                                                                   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const initialIncomeArray = Array(NUM_PAYCHECKS).fill(DEFAULT_BASE_SALARY);
+  const initialIncomeArray = Array(NUM_PAYCHECKS).fill(DEFAULT_INCOME);
   initialIncomeArray[STI_INDEX] = DEFAULT_STI;
   const [income, setIncome] = React.useState(initialIncomeArray);
   const [maxCompanyContribution, setMaxCompanyContribution] = React.useState(twoPercentOfIncome(initialIncomeArray, STI_INDEX));
@@ -85,18 +85,15 @@ export default function Content() {
     const newIndividualSeries = [];
     const newCompanySeries = [];
     for (let i = 0; i < NUM_PAYCHECKS; i++) {
-      // Income
-      const incomeThisPaycheck = PAYCHECKS[i] === STI_STRING ? income[i] : income[i] / 24.0;
-
       // Individual contribution
-      let individualContribution = roundToNearestCent(incomeThisPaycheck * contributionPercentage[i] / 100.0);
+      let individualContribution = roundToNearestCent(income[i] * contributionPercentage[i] / 100.0);
       if (newCumulativeIndividualContribution + individualContribution > maxIndividualContribution) {
         const overage = newCumulativeIndividualContribution + individualContribution - maxIndividualContribution
         individualContribution -= overage;
       }
 
       // Company contribution
-      let companyContribution = roundToNearestCent(incomeThisPaycheck * 0.02);
+      let companyContribution = roundToNearestCent(income[i] * 0.02);
       if (companyContribution > individualContribution) {
         companyContribution = individualContribution;
       }
@@ -148,7 +145,7 @@ export default function Content() {
                 <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
               </Grid>
               <Grid item xs={4.5}>
-                <IncomeInput label={(idx === STI_INDEX) ? 'STI grant' : 'Annual base salary'} value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
+                <IncomeInput label={(idx === STI_INDEX) ? 'STI grant' : 'Annual base salary ÷ 24'} value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
               </Grid>
               <Grid item xs={5}>
                 <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />

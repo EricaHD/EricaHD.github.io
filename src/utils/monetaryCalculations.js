@@ -8,11 +8,6 @@ export const currencyFormatter = new Intl.NumberFormat('en-US', {
 }).format;
 
 export const twoPercentOfIncome = (incomeArray, stiIdx) => {
-  let total = 0;
-  for (let i = 0; i < incomeArray.length; i++) {
-    // Round per paycheck (instead of once at the end of the calculation)
-    const income = (i === stiIdx) ? incomeArray[i] : roundToNearestCent(incomeArray[i] / 24);
-    total += roundToNearestCent(income * 0.02);
-  }
-  return total;
+  // Round per paycheck (instead of once at the end of the calculation)
+  return incomeArray.reduce((accumulator, income) => accumulator + roundToNearestCent(income * 0.02), 0);
 }
