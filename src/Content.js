@@ -102,7 +102,7 @@ export default function Content() {
       newCumulativeIndividualContribution += individualContribution;
       newCumulativeCompanyContribution += companyContribution;
 
-      // Sries
+      // Series
       newIndividualSeries.push({
         label: PAYCHECKS[i],
         data: (Array(i).fill(0)).concat(Array(NUM_PAYCHECKS - i).fill(individualContribution)),
