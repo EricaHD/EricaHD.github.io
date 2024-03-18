@@ -35,7 +35,6 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
 export default function ContributionPercentageInput({ value, onChange }) {
   return (
     <Stack direction="column" sx={styles.contributionPercentageInputStack}>
-      <Typography variant="caption">Retirement contribution</Typography>
       <NumberInput
         endAdornment={<InputAdornment>%</InputAdornment>}
         onChange={(event, val) => onChange(event, val)}

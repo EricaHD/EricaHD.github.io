@@ -13,6 +13,14 @@ import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './uti
 import { pastelColors } from './utils/colors';
 import styles from './styles/Content';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
 const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
@@ -132,64 +140,83 @@ export default function Content() {
   // RETURN                                                                                                           //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  const individualContributions = individualSeries.map((elt, idx) => elt['data'][idx]);
+  const companyContributions = companySeries.map((elt, idx) => elt['data'][idx]);
+
   return (
     <Stack sx={styles.fullWidth}>
+
       <AgeCheckbox onChange={onChangeMaxIndividualContribution} />
-      <Grid container>
 
-        {/* Left side */}
-        <Grid item xs={4}>
-          {PAYCHECKS.map((paycheck, idx) => (
-            <Grid container alignItems="center" sx={styles.paycheckSection} key={paycheck}>
-              <Grid item xs={2.5}>
-                <Typography variant="h5" sx={styles.paycheckSectionTitle}>{paycheck}</Typography>
-              </Grid>
-              <Grid item xs={4.5}>
-                <IncomeInput label={(idx === STI_INDEX) ? 'STI grant' : 'Annual salary ÷ 24'} value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
-              </Grid>
-              <Grid item xs={5}>
-                <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
-              </Grid>
-            </Grid>
-          ))}
-        </Grid>
+      <Typography variant="subtitle1" sx={{ margin: '0 auto 25px' }}><i>Scroll down to enter income and retirement contribution percentage details!</i></Typography>
 
-        {/* Right side */}
-        <Grid item xs={8}>
-          <Stack direction="row" spacing={5} justifyContent="center">
-            <CumulativeContributionInfo
-              cumulativeContribution={cumulativeIndividualContribution}
-              maximumContribution={maxIndividualContribution}
-              individualOrCompany={'individual'}
-            />
-            <CumulativeContributionInfo
-              cumulativeContribution={cumulativeCompanyContribution}
-              maximumContribution={maxCompanyContribution}
-              individualOrCompany={'company'}
-            />
-          </Stack>
-          <Chart
-            title={'Individual Contributions'}
-            xAxisData={PAYCHECKS}
-            series={individualSeries}
-            maximumContribution={maxIndividualContribution}
-            maximumContributionLabel={'Maximum Individual Contribution'}
-          />
-          <Chart
-            title={'Company Contributions'}
-            xAxisData={PAYCHECKS}
-            series={companySeries}
-            maximumContribution={maxCompanyContribution}
-            maximumContributionLabel={'Maximum Company Contribution'}
-          />
-          <SummaryTable
-            header={PAYCHECKS}
-            individualContributions={individualSeries.map((elt, idx) => elt['data'][idx])}
-            companyContributions={companySeries.map((elt, idx) => elt['data'][idx])}
-          />
-        </Grid>
+      <Stack direction="row" spacing={5} justifyContent="center">
+        <CumulativeContributionInfo
+          cumulativeContribution={cumulativeIndividualContribution}
+          maximumContribution={maxIndividualContribution}
+          individualOrCompany={'individual'}
+        />
+        <CumulativeContributionInfo
+          cumulativeContribution={cumulativeCompanyContribution}
+          maximumContribution={maxCompanyContribution}
+          individualOrCompany={'company'}
+        />
+      </Stack>
 
-      </Grid>
+      <Chart
+        title={'Individual Contributions'}
+        xAxisData={PAYCHECKS}
+        series={individualSeries}
+        maximumContribution={maxIndividualContribution}
+        maximumContributionLabel={'Maximum Individual Contribution'}
+      />
+
+      <Chart
+        title={'Company Contributions'}
+        xAxisData={PAYCHECKS}
+        series={companySeries}
+        maximumContribution={maxCompanyContribution}
+        maximumContributionLabel={'Maximum Company Contribution'}
+      />
+
+      <Typography variant="h4" sx={{ color: '#3f434a', textAlign: 'center', marginTop: '35px', marginBottom: '20px' }}>Summary of Contributions</Typography>
+      <TableContainer component={Paper} sx={{ margin: '0 30px', width: '95%' }}>
+        <Table size="small">
+          {/* Header */}
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell><b>Paycheck Income<br />(annual salary ÷ 24, or STI grant)</b></TableCell>
+              <TableCell><b>Retirement Contribution</b></TableCell>
+              <TableCell><b>Individual Contribution</b></TableCell>
+              <TableCell><b>Company Contribution</b></TableCell>
+            </TableRow>
+          </TableHead>
+          {/* Rows */}
+          <TableBody>
+            {PAYCHECKS.map((paycheck, idx) => (
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={paycheck}>
+                <TableCell component="th" scope="row" key={`${paycheck}-paycheck`}>
+                  <b>{paycheck}</b>
+                </TableCell>
+                <TableCell component="th" scope="row" key={`${paycheck}-income`}>
+                  <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
+                </TableCell>
+                <TableCell component="th" scope="row" key={`${paycheck}-contrib`}>
+                  <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
+                </TableCell>
+                <TableCell component="th" scope="row" key={`${paycheck}-individual`}>
+                  {currencyFormatter(individualContributions[idx])}
+                </TableCell>
+                <TableCell component="th" scope="row" key={`${paycheck}-company`}>
+                  {currencyFormatter(companyContributions[idx])}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
     </Stack>
   );
 }

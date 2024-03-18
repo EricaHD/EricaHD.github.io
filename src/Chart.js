@@ -13,10 +13,10 @@ import styles from './styles/Chart';
 export default function Chart({ title, xAxisData, series, maximumContribution, maximumContributionLabel }) {
   return (
     <div>
-      <Typography variant="h5" sx={styles.chartTitle}>{title}</Typography>
+      <Typography variant="h4" sx={styles.chartTitle}>{title}</Typography>
       <ResponsiveChartContainer
         series={series}
-        xAxis={[{ scaleType: 'band', data: xAxisData, label: 'Paycheck', valueFormatter: (value) => `Contributions up until ${value}` }]}
+        xAxis={[{ scaleType: 'band', data: xAxisData }]}
         yAxis={[{ max: maximumContribution * 1.05, valueFormatter: currencyFormatter }]}
         height={800}
         margin={{ left: 100 }}

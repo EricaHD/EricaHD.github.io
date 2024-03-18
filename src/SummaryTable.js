@@ -10,43 +10,42 @@ import Paper from '@mui/material/Paper';
 import { currencyFormatter } from './utils/monetaryCalculations';
 import styles from './styles/SummaryTable';
 
-export default function SummaryTable({ header, individualContributions, companyContributions }) {
+export default function SummaryTable({ paychecks, individualContributions, companyContributions }) {
   return (
     <div>
-      <Typography variant="h5" sx={styles.tableTitle}>Summary of Contributions</Typography>
-      <TableContainer component={Paper} sx={styles.table}>
+      <TableContainer component={Paper} sx={{ margin: '0 30px', width: '95%' }}>
         <Table size="small">
           {/* Header */}
           <TableHead>
             <TableRow>
               <TableCell />
-              {header.map((row) => (
-                <TableCell key={row}>{row}</TableCell>
-              ))}
+              <TableCell><b>{'Annual salary ÷ 24'}</b></TableCell>
+              <TableCell><b>Retirement contribution</b></TableCell>
+              <TableCell><b>Individual contribution</b></TableCell>
+              <TableCell><b>Company contribution</b></TableCell>
             </TableRow>
           </TableHead>
           {/* Rows */}
           <TableBody>
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {'Individual:'}
-              </TableCell>
-              {individualContributions.map((individualContribution, idx) => (
-                <TableCell component="th" scope="row" key={idx}>
-                  {currencyFormatter(individualContribution)}
+            {paychecks.map((paycheck, idx) => (
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  <b>{paycheck}</b>
                 </TableCell>
-              ))}
-            </TableRow>
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {'Company:'}
-              </TableCell>
-              {companyContributions.map((companyContribution, idx) => (
-                <TableCell component="th" scope="row" key={idx}>
-                  {currencyFormatter(companyContribution)}
+                <TableCell component="th" scope="row">
+                  Income input
                 </TableCell>
-              ))}
-            </TableRow>
+                <TableCell component="th" scope="row">
+                  Retirement contribution input
+                </TableCell>
+                <TableCell component="th" scope="row" key={idx}>
+                  {currencyFormatter(individualContributions[idx])}
+                </TableCell>
+                <TableCell component="th" scope="row" key={idx}>
+                  {currencyFormatter(companyContributions[idx])}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
