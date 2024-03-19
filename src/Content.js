@@ -9,6 +9,7 @@ import ContributionPercentageInput from './ContributionPercentageInput';
 import CumulativeContributionInfo from './CumulativeContributionInfo';
 import Chart from './Chart';
 import SummaryTable from './SummaryTable';
+import SectionTitle from './SectionTitle';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Content';
@@ -165,23 +166,32 @@ export default function Content() {
         />
       </Stack>
 
-      <Chart
+      <SectionTitle
         title={'Individual Contributions'}
+        marginBottom={'-40px'}
+      />
+      <Chart
         xAxisData={PAYCHECKS}
         series={individualSeries}
         maximumContribution={maxIndividualContribution}
         maximumContributionLabel={'Maximum Individual Contribution'}
       />
 
-      <Chart
+      <SectionTitle
         title={'Company Contributions'}
+        marginBottom={'-40px'}
+      />
+      <Chart
         xAxisData={PAYCHECKS}
         series={companySeries}
         maximumContribution={maxCompanyContribution}
         maximumContributionLabel={'Maximum Company Contribution'}
       />
 
-      <Typography variant="h4" sx={{ color: '#3f434a', textAlign: 'center', marginTop: '35px', marginBottom: '20px' }}>Summary of Contributions</Typography>
+      <SectionTitle
+        title={'Summary of Contributions'}
+        marginBottom={'20px'}
+      />
       <TableContainer component={Paper} sx={{ margin: '0 30px', width: '95%' }}>
         <Table size="small">
           {/* Header */}
