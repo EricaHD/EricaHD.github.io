@@ -14,7 +14,7 @@ export default function CumulativeContributionInfo({ cumulativeContribution, max
         {currencyFormatter(cumulativeContribution)}
       </Typography>
       <Typography variant="caption">
-        Maximum {individualOrCompany.toLowerCase()} contribution is {currencyFormatter(maximumContribution)}
+        Maximum {individualOrCompany.toLowerCase()} contribution for the entire year = {currencyFormatter(maximumContribution)}
       </Typography>
     </Box>
   );
