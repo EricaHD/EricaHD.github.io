@@ -50,8 +50,8 @@ const InputAdornment = styled('div')(
   ({ theme }) => `
   margin: 8px 10px 8px -25px;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   grid-row: 1/3;
   color: ${theme.palette.mode === 'dark' ? grey[500] : grey[700]};
 `
@@ -64,8 +64,8 @@ const StyledInputRoot = styled('div')(
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[500]};
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
 `
 );
 
