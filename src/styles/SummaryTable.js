@@ -1,12 +1,9 @@
 export default {
-  tableTitle: {
-    color: '#3f434a',
-    marginBottom: '15px',
-    marginTop: '35px',
-    textAlign: 'center',
-  },
-  table: {
+  tableContainer: {
     margin: '0 30px',
     width: '95%',
+  },
+  tableRow: {
+    '&:last-child td, &:last-child th': { border: 0 }
   },
 };

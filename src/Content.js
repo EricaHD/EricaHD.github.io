@@ -4,8 +4,6 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AgeCheckbox from './AgeCheckbox';
-import IncomeInput from './IncomeInput';
-import ContributionPercentageInput from './ContributionPercentageInput';
 import CumulativeContributionInfo from './CumulativeContributionInfo';
 import Chart from './Chart';
 import SummaryTable from './SummaryTable';
@@ -13,14 +11,6 @@ import SectionTitle from './SectionTitle';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Content';
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 const UNDER_FIFTY_MAX_CONTRIBUTION = 23000;
 const FIFTY_OR_OLDER_MAX_CONTRIBUTION = 30500;
@@ -141,9 +131,6 @@ export default function Content() {
   // RETURN                                                                                                           //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const individualContributions = individualSeries.map((elt, idx) => elt['data'][idx]);
-  const companyContributions = companySeries.map((elt, idx) => elt['data'][idx]);
-
   return (
     <Stack sx={styles.fullWidth}>
 
@@ -192,42 +179,15 @@ export default function Content() {
         title={'Summary of Contributions'}
         marginBottom={'20px'}
       />
-      <TableContainer component={Paper} sx={{ margin: '0 30px', width: '95%' }}>
-        <Table size="small">
-          {/* Header */}
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell><b>Paycheck Income<br />(annual salary ÷ 24, or STI grant)</b></TableCell>
-              <TableCell><b>Retirement Contribution</b></TableCell>
-              <TableCell><b>Individual Contribution</b></TableCell>
-              <TableCell><b>Company Contribution</b></TableCell>
-            </TableRow>
-          </TableHead>
-          {/* Rows */}
-          <TableBody>
-            {PAYCHECKS.map((paycheck, idx) => (
-              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={paycheck}>
-                <TableCell component="th" scope="row" key={`${paycheck}-paycheck`}>
-                  <b>{paycheck}</b>
-                </TableCell>
-                <TableCell component="th" scope="row" key={`${paycheck}-income`}>
-                  <IncomeInput value={income[idx]} onChange={(event, val) => onChangeIncome(idx, event, val)} />
-                </TableCell>
-                <TableCell component="th" scope="row" key={`${paycheck}-contrib`}>
-                  <ContributionPercentageInput value={contributionPercentage[idx]} onChange={(event, val) => onChangeContributionPercentage(idx, event, val)} />
-                </TableCell>
-                <TableCell component="th" scope="row" key={`${paycheck}-individual`}>
-                  {currencyFormatter(individualContributions[idx])}
-                </TableCell>
-                <TableCell component="th" scope="row" key={`${paycheck}-company`}>
-                  {currencyFormatter(companyContributions[idx])}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <SummaryTable
+        paychecks={PAYCHECKS}
+        income={income}
+        onChangeIncome={onChangeIncome}
+        contributionPercentage={contributionPercentage}
+        onChangeContributionPercentage={onChangeContributionPercentage}
+        individualContributions={individualSeries.map((elt, idx) => elt['data'][idx])}
+        companyContributions={companySeries.map((elt, idx) => elt['data'][idx])}
+      />
 
     </Stack>
   );
