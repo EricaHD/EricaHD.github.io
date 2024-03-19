@@ -148,7 +148,9 @@ export default function Content() {
 
       <AgeCheckbox onChange={onChangeMaxIndividualContribution} />
 
-      <Typography variant="subtitle1" sx={{ margin: '0 auto 25px' }}><i>Scroll down to enter income and retirement contribution percentage details!</i></Typography>
+      <Typography variant="subtitle1" sx={{ margin: '0 auto 25px' }}>
+        <i>Scroll down to enter income and retirement contribution percentage details!</i>
+      </Typography>
 
       <Stack direction="row" spacing={5} justifyContent="center">
         <CumulativeContributionInfo
