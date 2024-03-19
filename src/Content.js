@@ -136,7 +136,7 @@ export default function Content() {
 
       <AgeCheckbox onChange={onChangeMaxIndividualContribution} />
 
-      <Typography variant="subtitle1" sx={{ margin: '0 auto 25px' }}>
+      <Typography variant="subtitle1" sx={styles.scrollDownNote}>
         <i>Scroll down to enter income and retirement contribution percentage details!</i>
       </Typography>
 
