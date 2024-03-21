@@ -8,6 +8,8 @@ import CumulativeContributionInfo from './CumulativeContributionInfo';
 import Chart from './Chart';
 import SummaryTable from './SummaryTable';
 import SectionTitle from './SectionTitle';
+import AutopopulateIncome from './AutopopulateIncome';
+import AutopopulateContributionPercentage from './AutopopulateContributionPercentage';
 import { roundToNearestCent, currencyFormatter, twoPercentOfIncome } from './utils/monetaryCalculations';
 import { pastelColors } from './utils/colors';
 import styles from './styles/Content';
@@ -179,6 +181,10 @@ export default function Content() {
         title={'Summary of Contributions'}
         marginBottom={'20px'}
       />
+      {/* <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}> */}
+        {/* <AutopopulateIncome /> */}
+        {/* <AutopopulateContributionPercentage /> */}
+      {/* </Stack> */}
       <SummaryTable
         paychecks={PAYCHECKS}
         income={income}
