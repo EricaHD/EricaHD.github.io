@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AgeCheckbox from './AgeCheckbox';
 import CumulativeContributionInfo from './CumulativeContributionInfo';
