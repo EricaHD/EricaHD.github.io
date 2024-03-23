@@ -13,48 +13,11 @@ const DEFAULT_PRE_MARCH_ANNUAL_SALARY = 6250 * 24;
 const DEFAULT_POST_MARCH_ANNUAL_SALARY = 6500 * 24;
 const DEFAULT_STI = 17250;
 
-function ConfirmationDialogRaw({ open, onSubmit, onCancel }) {
+export default function AutopopulateIncome({ autopopulateIncome }) {
+  const [open, setOpen] = React.useState(false);
   const [preMarchAnnualSalary, setPreMarchAnnualSalary] = React.useState(DEFAULT_PRE_MARCH_ANNUAL_SALARY);
   const [postMarchAnnualSalary, setPostMarchAnnualSalary] = React.useState(DEFAULT_POST_MARCH_ANNUAL_SALARY);
   const [sti, setSti] = React.useState(DEFAULT_STI);
-
-  return (
-    <Dialog open={open} maxWidth="sm">
-      <DialogTitle>Autopopulate Paycheck Income</DialogTitle>
-      <DialogContent dividers>
-        <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">Annual base salary before March 1:</Typography>
-          <IncomeInput value={preMarchAnnualSalary} onChange={(event, val) => setPreMarchAnnualSalary(event.target.value)} />
-        </Stack>
-        <br />
-        <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">Annual base salary after March 1:</Typography>
-          <IncomeInput value={postMarchAnnualSalary} onChange={(event, val) => setPostMarchAnnualSalary(event.target.value)} />
-        </Stack>
-        <br />
-        <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">STI (paid out in mid-March):</Typography>
-          <IncomeInput value={sti} onChange={(event, val) => setSti(event.target.value)} />
-        </Stack>
-        <br />
-        <Typography variant="body1">
-          <i>
-            This will overwrite the values currently in the "Paycheck Income" column.
-            Each value left blank will be treated as $0.
-            You can still edit individual income values after autopopulating (e.g. in the case of an off-cycle raise or bonus).
-          </i>
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={onCancel}>Cancel</Button>
-        <Button onClick={() => onSubmit(preMarchAnnualSalary, postMarchAnnualSalary, sti)}>Ok</Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-export default function AutopopulateIncome({ autopopulateIncome }) {
-  const [open, setOpen] = React.useState(false);
 
   const onClickButton = () => {
     setOpen(true);
@@ -74,11 +37,37 @@ export default function AutopopulateIncome({ autopopulateIncome }) {
       <Button variant="contained" onClick={onClickButton} sx={styles.button}>
         Autopopulate<br />paycheck income
       </Button>
-      <ConfirmationDialogRaw
-        open={open}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-      />
+      <Dialog open={open} maxWidth="sm">
+        <DialogTitle>Autopopulate Paycheck Income</DialogTitle>
+        <DialogContent dividers>
+          <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
+            <Typography variant="body1">Annual base salary before March 1:</Typography>
+            <IncomeInput value={preMarchAnnualSalary} onChange={(event, val) => setPreMarchAnnualSalary(event.target.value)} />
+          </Stack>
+          <br />
+          <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
+            <Typography variant="body1">Annual base salary after March 1:</Typography>
+            <IncomeInput value={postMarchAnnualSalary} onChange={(event, val) => setPostMarchAnnualSalary(event.target.value)} />
+          </Stack>
+          <br />
+          <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
+            <Typography variant="body1">STI (paid out in mid-March):</Typography>
+            <IncomeInput value={sti} onChange={(event, val) => setSti(event.target.value)} />
+          </Stack>
+          <br />
+          <Typography variant="body1">
+            <i>
+              This will overwrite the values currently in the "Paycheck Income" column.
+              Each value left blank will be treated as $0.
+              You can still edit individual income values after autopopulating (e.g. in the case of an off-cycle raise or bonus).
+            </i>
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={onCancel}>Cancel</Button>
+          <Button onClick={() => onSubmit(preMarchAnnualSalary, postMarchAnnualSalary, sti)}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

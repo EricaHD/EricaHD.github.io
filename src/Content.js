@@ -200,10 +200,10 @@ export default function Content() {
         title={'Summary of Contributions'}
         marginBottom={'20px'}
       />
-      {/* <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}> */}
-        {/* <AutopopulateIncome /> */}
+      <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}>
+        <AutopopulateIncome autopopulateIncome={autopopulateIncome} />
         {/* <AutopopulateContributionPercentage /> */}
-      {/* </Stack> */}
+      </Stack>
       <SummaryTable
         paychecks={PAYCHECKS}
         income={income}
