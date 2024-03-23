@@ -40,7 +40,7 @@ export default function ContributionPercentageInput({ value, onChange }) {
         onChange={(event, val) => onChange(event, val)}
         min={0}
         max={100}
-        defaultValue={value}
+        value={value}
       />
     </Stack>
   );

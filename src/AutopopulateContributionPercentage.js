@@ -9,78 +9,51 @@ import DialogActions from '@mui/material/DialogActions';
 import ContributionPercentageInput from './ContributionPercentageInput';
 import styles from './styles/AutopopulateContributionPercentage';
 
-function ConfirmationDialogRaw(props) {
-  const { onClose, value: valueProp, open } = props;
-  const [value, setValue] = React.useState(valueProp);
+const DEFAULT_RETIREMENT_CONTRIBUTION = 10;
 
-  React.useEffect(() => {
-    if (!open) {
-      setValue(valueProp);
-    }
-  }, [valueProp, open]);
-
-  const handleCancel = () => {
-    onClose();
-  };
-
-  const handleOk = () => {
-    onClose(value);
-  };
-
-  return (
-    <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-      maxWidth="sm"
-      open={open}
-    >
-      <DialogTitle>Autopopulate Retirement Contribution</DialogTitle>
-      <DialogContent dividers>
-        <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">Retirement contribution percentage:</Typography>
-          <ContributionPercentageInput value={12} onChange={(event, val) => console.log(event, val)} />
-        </Stack>
-        <br />
-        <Typography variant="body1">
-          <i>
-            This will overwrite the values currently in the "Retirement Contribution" column.
-            You can still edit those values after autopopulating.
-          </i>
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleOk}>Ok</Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-export default function AutopopulateContributionPercentage() {
+export default function AutopopulateContributionPercentage({ autopopulateContributionPercentage }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('Dione'); // TODO (erica)
+  const [retirementContribution, setRetirementContribution] = React.useState(DEFAULT_RETIREMENT_CONTRIBUTION);
 
-  const handleClickListItem = () => {
+  const onClickButton = () => {
     setOpen(true);
   };
 
-  const handleClose = (newValue) => {
+  const onSubmit = (retirementContribution) => {
     setOpen(false);
+    autopopulateContributionPercentage(retirementContribution);
+  };
 
-    if (newValue) {
-      setValue(newValue);
-    }
+  const onCancel = () => {
+    setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickListItem} sx={styles.button}>
+      <Button variant="contained" onClick={onClickButton} sx={styles.button}>
         Autopopulate<br />retirement contribution
       </Button>
-      <ConfirmationDialogRaw
-        open={open}
-        onClose={handleClose}
-        value={value}
-      />
+      <Dialog open={open} maxWidth="sm">
+        <DialogTitle>Autopopulate Retirement Contribution</DialogTitle>
+        <DialogContent dividers>
+          <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
+            <Typography variant="body1">Retirement contribution percentage:</Typography>
+            <ContributionPercentageInput value={retirementContribution} onChange={(event, val) => setRetirementContribution(event.target.value)} />
+          </Stack>
+          <br />
+          <Typography variant="body1">
+            <i>
+              This will overwrite the values currently in the "Retirement Contribution" column.
+              If left blank, it will be treated as 0%.
+              You can still edit individual retirement contribution values after autopopulating.
+            </i>
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={onCancel}>Cancel</Button>
+          <Button onClick={() => onSubmit(retirementContribution)}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

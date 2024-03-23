@@ -19,6 +19,7 @@ const COMPANY_CONTRIBUTION_PERCENTAGE = 0.02;
 
 const DEFAULT_INCOME = 7000;
 const DEFAULT_STI = 15000;
+const DEFAULT_RETIREMENT_CONTRIBUTION = 12;
 
 const STI_STRING = 'STI';
 const PAYCHECKS = [
@@ -81,11 +82,17 @@ export default function Content() {
   // STATE - CONTRIBUTION PERCENTAGES                                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const [contributionPercentage, setContributionPercentage] = React.useState(Array(NUM_PAYCHECKS).fill(12));
+  const [contributionPercentage, setContributionPercentage] = React.useState(Array(NUM_PAYCHECKS).fill(DEFAULT_RETIREMENT_CONTRIBUTION));
 
   const onChangeContributionPercentage = (idx, event, value) => {
     const newValue = (value === null) ? 0 : value;
     const newContributionPercentage = Object.assign([...contributionPercentage], { [idx]: newValue });
+    setContributionPercentage(newContributionPercentage);
+  }
+
+  const autopopulateContributionPercentage = (retirementContribution) => {
+    const newRetirementContribution = (retirementContribution === null) ? 0 : retirementContribution;
+    const newContributionPercentage = Array(NUM_PAYCHECKS).fill(newRetirementContribution);
     setContributionPercentage(newContributionPercentage);
   }
 
@@ -202,7 +209,7 @@ export default function Content() {
       />
       <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}>
         <AutopopulateIncome autopopulateIncome={autopopulateIncome} />
-        {/* <AutopopulateContributionPercentage /> */}
+        <AutopopulateContributionPercentage autopopulateContributionPercentage={autopopulateContributionPercentage} />
       </Stack>
       <SummaryTable
         paychecks={PAYCHECKS}
