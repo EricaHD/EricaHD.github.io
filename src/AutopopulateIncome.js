@@ -9,87 +9,75 @@ import DialogActions from '@mui/material/DialogActions';
 import IncomeInput from './IncomeInput';
 import styles from './styles/AutopopulateIncome';
 
-function ConfirmationDialogRaw(props) {
-  const { onClose, value: valueProp, open } = props;
-  const [value, setValue] = React.useState(valueProp);
+const DEFAULT_PRE_MARCH_ANNUAL_SALARY = 6250 * 24;
+const DEFAULT_POST_MARCH_ANNUAL_SALARY = 6500 * 24;
+const DEFAULT_STI = 17250;
 
-  React.useEffect(() => {
-    if (!open) {
-      setValue(valueProp);
-    }
-  }, [valueProp, open]);
-
-  const handleCancel = () => {
-    onClose();
-  };
-
-  const handleOk = () => {
-    onClose(value);
-  };
+function ConfirmationDialogRaw({ open, onSubmit, onCancel }) {
+  const [preMarchAnnualSalary, setPreMarchAnnualSalary] = React.useState(DEFAULT_PRE_MARCH_ANNUAL_SALARY);
+  const [postMarchAnnualSalary, setPostMarchAnnualSalary] = React.useState(DEFAULT_POST_MARCH_ANNUAL_SALARY);
+  const [sti, setSti] = React.useState(DEFAULT_STI);
 
   return (
-    <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-      maxWidth="sm"
-      open={open}
-    >
+    <Dialog open={open} maxWidth="sm">
       <DialogTitle>Autopopulate Paycheck Income</DialogTitle>
       <DialogContent dividers>
         <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">Annual base salary before Mar 1:</Typography>
-          <IncomeInput value={1000} onChange={(event, val) => console.log(idx, event, val)} />
+          <Typography variant="body1">Annual base salary before March 1:</Typography>
+          <IncomeInput value={preMarchAnnualSalary} onChange={(event, val) => setPreMarchAnnualSalary(event.target.value)} />
         </Stack>
         <br />
         <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">Annual base salary after Mar 1:</Typography>
-          <IncomeInput value={1000} onChange={(event, val) => console.log(idx, event, val)} />
+          <Typography variant="body1">Annual base salary after March 1:</Typography>
+          <IncomeInput value={postMarchAnnualSalary} onChange={(event, val) => setPostMarchAnnualSalary(event.target.value)} />
         </Stack>
         <br />
         <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
-          <Typography variant="body1">STI (paid out on Mar 15):</Typography>
-          <IncomeInput value={1000} onChange={(event, val) => console.log(idx, event, val)} />
+          <Typography variant="body1">STI (paid out in mid-March):</Typography>
+          <IncomeInput value={sti} onChange={(event, val) => setSti(event.target.value)} />
         </Stack>
         <br />
         <Typography variant="body1">
           <i>
             This will overwrite the values currently in the "Paycheck Income" column.
-            You can still edit those values after autopopulating (e.g. in the case of an off-cycle raise or bonus).
+            Each value left blank will be treated as $0.
+            You can still edit individual income values after autopopulating (e.g. in the case of an off-cycle raise or bonus).
           </i>
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleOk}>Ok</Button>
+        <Button autoFocus onClick={onCancel}>Cancel</Button>
+        <Button onClick={() => onSubmit(preMarchAnnualSalary, postMarchAnnualSalary, sti)}>Ok</Button>
       </DialogActions>
     </Dialog>
   );
 }
 
-export default function AutopopulateIncome() {
+export default function AutopopulateIncome({ autopopulateIncome }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('Dione'); // TODO (erica)
 
-  const handleClickListItem = () => {
+  const onClickButton = () => {
     setOpen(true);
   };
 
-  const handleClose = (newValue) => {
+  const onSubmit = (preMarchAnnualSalary, postMarchAnnualSalary, sti) => {
     setOpen(false);
+    autopopulateIncome(preMarchAnnualSalary, postMarchAnnualSalary, sti);
+  };
 
-    if (newValue) {
-      setValue(newValue);
-    }
+  const onCancel = (preMarchAnnualSalary, postMarchAnnualSalary, sti) => {
+    setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickListItem} sx={styles.button}>
+      <Button variant="contained" onClick={onClickButton} sx={styles.button}>
         Autopopulate<br />paycheck income
       </Button>
       <ConfirmationDialogRaw
         open={open}
-        onClose={handleClose}
-        value={value}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
       />
     </div>
   );

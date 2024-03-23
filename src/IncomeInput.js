@@ -33,7 +33,7 @@ export default function IncomeInput({ label, value, onChange }) {
         <OutlinedInput
           type="number"
           startAdornment="$"
-          defaultValue={value}
+          value={value}
           onChange={handleInputChange}
           sx={styles.outlinedInput}
         />
