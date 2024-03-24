@@ -42,17 +42,17 @@ export default function AutopopulateIncome({ autopopulateIncome }) {
         <DialogContent dividers>
           <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
             <Typography variant="body1">Annual base salary before March 1:</Typography>
-            <IncomeInput value={preMarchAnnualSalary} onChange={(event, val) => setPreMarchAnnualSalary(event.target.value)} />
+            <IncomeInput value={preMarchAnnualSalary} onChange={(event, val) => setPreMarchAnnualSalary(val)} />
           </Stack>
           <br />
           <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
             <Typography variant="body1">Annual base salary after March 1:</Typography>
-            <IncomeInput value={postMarchAnnualSalary} onChange={(event, val) => setPostMarchAnnualSalary(event.target.value)} />
+            <IncomeInput value={postMarchAnnualSalary} onChange={(event, val) => setPostMarchAnnualSalary(val)} />
           </Stack>
           <br />
           <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
             <Typography variant="body1">STI (paid out in mid-March):</Typography>
-            <IncomeInput value={sti} onChange={(event, val) => setSti(event.target.value)} />
+            <IncomeInput value={sti} onChange={(event, val) => setSti(val)} />
           </Stack>
           <br />
           <Typography variant="body1">
