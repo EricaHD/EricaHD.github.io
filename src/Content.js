@@ -58,25 +58,25 @@ export default function Content() {
     setMaxCompanyContribution(twoPercentOfIncome(newIncome, STI_INDEX));
   }
 
-  const autopopulateIncome = (preMarchAnnualSalary, postMarchAnnualSalary, sti) => {
-    const newPreMarchAnnualSalary = (preMarchAnnualSalary === null) ? 0 : preMarchAnnualSalary;
-    const newPostMarchAnnualSalary = (postMarchAnnualSalary === null) ? 0 : postMarchAnnualSalary;
-    const newSti = (sti === null) ? 0 : sti;
-    const newIncome = Array(NUM_PAYCHECKS).fill(0);
-    for (let i = 0; i < newIncome.length; i++) {
-      if (i < STI_INDEX) {
-        newIncome[i] = roundToNearestCent(preMarchAnnualSalary / 24);
-      }
-      if (i === STI_INDEX) {
-        newIncome[i] = roundToNearestCent(sti);
-      }
-      if (i > STI_INDEX) {
-        newIncome[i] = roundToNearestCent(postMarchAnnualSalary / 24);
-      }
-    }
-    setIncome(newIncome);
-    setMaxCompanyContribution(twoPercentOfIncome(newIncome, STI_INDEX));
-  }
+//  const autopopulateIncome = (preMarchAnnualSalary, postMarchAnnualSalary, sti) => {
+//    const newPreMarchAnnualSalary = (preMarchAnnualSalary === null) ? 0 : preMarchAnnualSalary;
+//    const newPostMarchAnnualSalary = (postMarchAnnualSalary === null) ? 0 : postMarchAnnualSalary;
+//    const newSti = (sti === null) ? 0 : sti;
+//    const newIncome = Array(NUM_PAYCHECKS).fill(0);
+//    for (let i = 0; i < newIncome.length; i++) {
+//      if (i < STI_INDEX) {
+//        newIncome[i] = roundToNearestCent(preMarchAnnualSalary / 24);
+//      }
+//      if (i === STI_INDEX) {
+//        newIncome[i] = roundToNearestCent(sti);
+//      }
+//      if (i > STI_INDEX) {
+//        newIncome[i] = roundToNearestCent(postMarchAnnualSalary / 24);
+//      }
+//    }
+//    setIncome(newIncome);
+//    setMaxCompanyContribution(twoPercentOfIncome(newIncome, STI_INDEX));
+//  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // STATE - CONTRIBUTION PERCENTAGES                                                                                 //
@@ -90,11 +90,11 @@ export default function Content() {
     setContributionPercentage(newContributionPercentage);
   }
 
-  const autopopulateContributionPercentage = (retirementContribution) => {
-    const newRetirementContribution = (retirementContribution === null) ? 0 : retirementContribution;
-    const newContributionPercentage = Array(NUM_PAYCHECKS).fill(newRetirementContribution);
-    setContributionPercentage(newContributionPercentage);
-  }
+//  const autopopulateContributionPercentage = (retirementContribution) => {
+//    const newRetirementContribution = (retirementContribution === null) ? 0 : retirementContribution;
+//    const newContributionPercentage = Array(NUM_PAYCHECKS).fill(newRetirementContribution);
+//    setContributionPercentage(newContributionPercentage);
+//  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // DATA - CHART DATA                                                                                                //
@@ -207,10 +207,10 @@ export default function Content() {
         title={'Summary of Contributions'}
         marginBottom={'20px'}
       />
-      <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}>
-        <AutopopulateIncome autopopulateIncome={autopopulateIncome} />
-        <AutopopulateContributionPercentage autopopulateContributionPercentage={autopopulateContributionPercentage} />
-      </Stack>
+      {/* <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}> */}
+      {/*   <AutopopulateIncome autopopulateIncome={autopopulateIncome} /> */}
+      {/*   <AutopopulateContributionPercentage autopopulateContributionPercentage={autopopulateContributionPercentage} /> */}
+      {/* </Stack> */}
       <SummaryTable
         paychecks={PAYCHECKS}
         income={income}
