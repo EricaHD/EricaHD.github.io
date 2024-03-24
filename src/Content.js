@@ -90,11 +90,11 @@ export default function Content() {
     setContributionPercentage(newContributionPercentage);
   }
 
-//  const autopopulateContributionPercentage = (retirementContribution) => {
-//    const newRetirementContribution = (retirementContribution === null) ? 0 : retirementContribution;
-//    const newContributionPercentage = Array(NUM_PAYCHECKS).fill(newRetirementContribution);
-//    setContributionPercentage(newContributionPercentage);
-//  }
+  const autopopulateContributionPercentage = (retirementContribution) => {
+    const newRetirementContribution = (retirementContribution === null) ? 0 : retirementContribution;
+    const newContributionPercentage = Array(NUM_PAYCHECKS).fill(newRetirementContribution);
+    setContributionPercentage(newContributionPercentage);
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // DATA - CHART DATA                                                                                                //
@@ -207,10 +207,10 @@ export default function Content() {
         title={'Summary of Contributions'}
         marginBottom={'20px'}
       />
-      {/* <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}> */}
+      <Stack direction="row" spacing={5} justifyContent="center" sx={styles.autopopulateButtons}>
       {/*   <AutopopulateIncome autopopulateIncome={autopopulateIncome} /> */}
-      {/*   <AutopopulateContributionPercentage autopopulateContributionPercentage={autopopulateContributionPercentage} /> */}
-      {/* </Stack> */}
+        <AutopopulateContributionPercentage autopopulateContributionPercentage={autopopulateContributionPercentage} />
+      </Stack>
       <SummaryTable
         paychecks={PAYCHECKS}
         income={income}

@@ -38,7 +38,7 @@ export default function AutopopulateContributionPercentage({ autopopulateContrib
         <DialogContent dividers>
           <Stack direction="row" spacing={5} alignItems="center" justifyContent="space-between">
             <Typography variant="body1">Retirement contribution percentage:</Typography>
-            <ContributionPercentageInput value={retirementContribution} onChange={(event, val) => setRetirementContribution(event.target.value)} />
+            <ContributionPercentageInput value={retirementContribution} onChange={(event, val) => setRetirementContribution(val)} />
           </Stack>
           <br />
           <Typography variant="body1">
