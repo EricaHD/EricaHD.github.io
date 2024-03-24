@@ -14,7 +14,7 @@ export default function Chart({ xAxisData, series, maximumContribution, maximumC
       series={series}
       xAxis={[{ scaleType: 'band', data: xAxisData }]}
       yAxis={[{ max: maximumContribution * 1.05, valueFormatter: currencyFormatter }]}
-      height={800}
+      height={700}
       margin={{ left: 100 }}
     >
       <BarPlot />
